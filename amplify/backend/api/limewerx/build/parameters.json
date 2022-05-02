@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "limewerx",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "S3DeploymentBucket": "amplify-limewerx-dev-160310-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/e6ddf8a0d118cb1ae6f2c67511271acac8352c14"
+}

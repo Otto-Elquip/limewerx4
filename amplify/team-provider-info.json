@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-limewerx-dev-160310-authRole",
+      "UnauthRoleArn": "arn:aws:iam::136436761917:role/amplify-limewerx-dev-160310-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::136436761917:role/amplify-limewerx-dev-160310-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-limewerx-dev-160310-deployment",
+      "UnauthRoleName": "amplify-limewerx-dev-160310-unauthRole",
+      "StackName": "amplify-limewerx-dev-160310",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:136436761917:stack/amplify-limewerx-dev-160310/99dfb4d0-af1d-11ec-a22f-0a73a74ca2bc",
+      "AmplifyAppId": "dq4r4m0q08izq"
+    },
+    "categories": {
+      "auth": {
+        "limewerx0c298031": {}
+      }
+    }
+  }
+}

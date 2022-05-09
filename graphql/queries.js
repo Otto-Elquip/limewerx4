@@ -13,6 +13,47 @@ export const getPost = /* GraphQL */ `
     }
   }
 `;
+export const listCards = /* GraphQL */ `
+  query ListCards(
+    $filter: ModelCardFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCards(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        type
+        title
+        period
+        signal
+        isDisplayed
+      }
+      nextToken
+    }
+  }
+`;
+
+export const listCharts = /* GraphQL */ `
+  query ListCharts(
+    $filter: ModelChartFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCharts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        type
+        title
+        period
+        signal
+        filter
+        isDisplayed
+      }
+      nextToken
+    }
+  }
+`;
+
 export const listPosts = /* GraphQL */ `
   query ListPosts(
     $filter: ModelPostFilterInput

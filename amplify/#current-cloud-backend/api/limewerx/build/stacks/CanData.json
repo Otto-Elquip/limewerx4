@@ -43,13 +43,37 @@
     "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-      "Type": "String"
-    },
     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
       "Type": "String"
     },
     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartauth0FunctionQuerygetChartauth0FunctionAppSyncFunction4FF75159FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationcreateChartinit0FunctionMutationcreateChartinit0FunctionAppSyncFunction35486C02FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationcreateChartauth0FunctionMutationcreateChartauth0FunctionAppSyncFunctionB9891C33FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationupdateChartinit0FunctionMutationupdateChartinit0FunctionAppSyncFunction270B70B2FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptiononCreateChartauth0FunctionSubscriptiononCreateChartauth0FunctionAppSyncFunction82565C44FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptionOnCreateChartDataResolverFnSubscriptionOnCreateChartDataResolverFnAppSyncFunctionD11FA004FunctionId": {
       "Type": "String"
     }
   },
@@ -169,6 +193,10 @@
               }
             ]
           ]
+        },
+        "TimeToLiveSpecification": {
+          "AttributeName": "_ttl",
+          "Enabled": true
         }
       },
       "UpdateReplacePolicy": "Delete",
@@ -310,6 +338,50 @@
                       }
                     }
                   ]
+                },
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "AmplifyDataStore-",
+                            {
+                              "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                            },
+                            "-",
+                            {
+                              "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "AmplifyDataStore-",
+                            {
+                              "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                            },
+                            "-",
+                            {
+                              "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
                 }
               ]
             }
@@ -336,9 +408,29 @@
           "AwsRegion": {
             "Ref": "AWS::Region"
           },
+          "DeltaSyncConfig": {
+            "BaseTableTTL": "43200",
+            "DeltaSyncTableName": {
+              "Fn::Join": [
+                "",
+                [
+                  "AmplifyDataStore-",
+                  {
+                    "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                  },
+                  "-",
+                  {
+                    "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+                  }
+                ]
+              ]
+            },
+            "DeltaSyncTableTTL": "30"
+          },
           "TableName": {
             "Ref": "CanDataTable"
-          }
+          },
+          "Versioned": true
         },
         "ServiceRoleArn": {
           "Fn::GetAtt": [
@@ -350,36 +442,6 @@
       "DependsOn": [
         "CanDataIAMRole400AEA67"
       ]
-    },
-    "QuerygetCanDatapostAuth0FunctionQuerygetCanDatapostAuth0FunctionAppSyncFunction748529BF": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerygetCanDatapostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.getCanData.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
     },
     "QueryGetCanDataDataResolverFnQueryGetCanDataDataResolverFnAppSyncFunction6A3A0E38": {
       "Type": "AWS::AppSync::FunctionConfiguration",
@@ -426,6 +488,10 @@
               "/resolvers/Query.getCanData.res.vtl"
             ]
           ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
         }
       },
       "DependsOn": [
@@ -444,10 +510,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetCanDatapostAuth0FunctionQuerygetCanDatapostAuth0FunctionAppSyncFunction748529BF",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartauth0FunctionQuerygetChartauth0FunctionAppSyncFunction4FF75159FunctionId"
+            },
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -469,41 +535,27 @@
               {
                 "Ref": "CanDataTable"
               },
-              "\"))\n$util.toJson({})"
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "QuerylistCanDatapostAuth0FunctionQuerylistCanDatapostAuth0FunctionAppSyncFunctionE55E07A1": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerylistCanDatapostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.listCanData.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "QueryListCanDataDataResolverFnQueryListCanDataDataResolverFnAppSyncFunctionB5B909E8": {
@@ -551,6 +603,10 @@
               "/resolvers/Query.listCanData.res.vtl"
             ]
           ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
         }
       },
       "DependsOn": [
@@ -569,10 +625,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerylistCanDatapostAuth0FunctionQuerylistCanDatapostAuth0FunctionAppSyncFunctionE55E07A1",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartauth0FunctionQuerygetChartauth0FunctionAppSyncFunction4FF75159FunctionId"
+            },
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -594,24 +650,43 @@
               {
                 "Ref": "CanDataTable"
               },
-              "\"))\n$util.toJson({})"
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "MutationcreateCanDatainit0FunctionMutationcreateCanDatainit0FunctionAppSyncFunction8ED01214": {
+    "QuerySyncCanDataDataResolverFnQuerySyncCanDataDataResolverFnAppSyncFunction15B8EB98": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
         "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+          "Fn::GetAtt": [
+            "CanDataDataSource",
+            "Name"
+          ]
         },
         "FunctionVersion": "2018-05-29",
-        "Name": "MutationcreateCanDatainit0Function",
+        "Name": "QuerySyncCanDataDataResolverFn",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
             "",
@@ -624,41 +699,93 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.createCanData.init.1.req.vtl"
+              "/resolvers/Query.syncCanData.req.vtl"
             ]
           ]
         },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.syncCanData.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      },
+      "DependsOn": [
+        "CanDataDataSource"
+      ]
     },
-    "MutationcreateCanDatapostAuth0FunctionMutationcreateCanDatapostAuth0FunctionAppSyncFunction93CEA12E": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
+    "SyncCanDataResolver": {
+      "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        "FieldName": "syncCanData",
+        "TypeName": "Query",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartauth0FunctionQuerygetChartauth0FunctionAppSyncFunction4FF75159FunctionId"
+            },
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerySyncCanDataDataResolverFnQuerySyncCanDataDataResolverFnAppSyncFunction15B8EB98",
+                "FunctionId"
+              ]
+            }
+          ]
         },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationcreateCanDatapostAuth0Function",
-        "RequestMappingTemplateS3Location": {
+        "RequestMappingTemplate": {
           "Fn::Join": [
             "",
             [
-              "s3://",
+              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"syncCanData\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
-              "/",
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
               {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+                "Ref": "CanDataTable"
               },
-              "/resolvers/Mutation.createCanData.postAuth.1.req.vtl"
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },
-        "ResponseMappingTemplate": "$util.toJson({})"
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
     "MutationCreateCanDataDataResolverFnMutationCreateCanDataDataResolverFnAppSyncFunctionFB49FF4C": {
@@ -706,6 +833,10 @@
               "/resolvers/Mutation.createCanData.res.vtl"
             ]
           ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
         }
       },
       "DependsOn": [
@@ -724,16 +855,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "MutationcreateCanDatainit0FunctionMutationcreateCanDatainit0FunctionAppSyncFunction8ED01214",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationcreateChartinit0FunctionMutationcreateChartinit0FunctionAppSyncFunction35486C02FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "MutationcreateCanDatapostAuth0FunctionMutationcreateCanDatapostAuth0FunctionAppSyncFunction93CEA12E",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationcreateChartauth0FunctionMutationcreateChartauth0FunctionAppSyncFunctionB9891C33FunctionId"
+            },
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -755,24 +883,43 @@
               {
                 "Ref": "CanDataTable"
               },
-              "\"))\n$util.toJson({})"
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "MutationupdateCanDatainit0FunctionMutationupdateCanDatainit0FunctionAppSyncFunctionEDFA6256": {
+    "MutationupdateCanDataauth0FunctionMutationupdateCanDataauth0FunctionAppSyncFunction83837E64": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
         "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+          "Fn::GetAtt": [
+            "CanDataDataSource",
+            "Name"
+          ]
         },
         "FunctionVersion": "2018-05-29",
-        "Name": "MutationupdateCanDatainit0Function",
+        "Name": "MutationupdateCanDataauth0Function",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
             "",
@@ -785,25 +932,11 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.updateCanData.init.1.req.vtl"
+              "/resolvers/Mutation.updateCanData.auth.1.req.vtl"
             ]
           ]
         },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "MutationupdateCanDatapostAuth0FunctionMutationupdateCanDatapostAuth0FunctionAppSyncFunction984510B3": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationupdateCanDatapostAuth0Function",
-        "RequestMappingTemplateS3Location": {
+        "ResponseMappingTemplateS3Location": {
           "Fn::Join": [
             "",
             [
@@ -815,12 +948,14 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.updateCanData.postAuth.1.req.vtl"
+              "/resolvers/Mutation.updateCanData.auth.1.res.vtl"
             ]
           ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
+        }
+      },
+      "DependsOn": [
+        "CanDataDataSource"
+      ]
     },
     "MutationUpdateCanDataDataResolverFnMutationUpdateCanDataDataResolverFnAppSyncFunction8F941276": {
       "Type": "AWS::AppSync::FunctionConfiguration",
@@ -867,6 +1002,10 @@
               "/resolvers/Mutation.updateCanData.res.vtl"
             ]
           ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
         }
       },
       "DependsOn": [
@@ -885,16 +1024,16 @@
         "PipelineConfig": {
           "Functions": [
             {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationupdateChartinit0FunctionMutationupdateChartinit0FunctionAppSyncFunction270B70B2FunctionId"
+            },
+            {
               "Fn::GetAtt": [
-                "MutationupdateCanDatainit0FunctionMutationupdateCanDatainit0FunctionAppSyncFunctionEDFA6256",
+                "MutationupdateCanDataauth0FunctionMutationupdateCanDataauth0FunctionAppSyncFunction83837E64",
                 "FunctionId"
               ]
             },
             {
-              "Fn::GetAtt": [
-                "MutationupdateCanDatapostAuth0FunctionMutationupdateCanDatapostAuth0FunctionAppSyncFunction984510B3",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -916,24 +1055,43 @@
               {
                 "Ref": "CanDataTable"
               },
-              "\"))\n$util.toJson({})"
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "MutationdeleteCanDatapostAuth0FunctionMutationdeleteCanDatapostAuth0FunctionAppSyncFunctionF0FA7B2D": {
+    "MutationdeleteCanDataauth0FunctionMutationdeleteCanDataauth0FunctionAppSyncFunction594EC0A9": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
         "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+          "Fn::GetAtt": [
+            "CanDataDataSource",
+            "Name"
+          ]
         },
         "FunctionVersion": "2018-05-29",
-        "Name": "MutationdeleteCanDatapostAuth0Function",
+        "Name": "MutationdeleteCanDataauth0Function",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
             "",
@@ -946,12 +1104,30 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Mutation.deleteCanData.postAuth.1.req.vtl"
+              "/resolvers/Mutation.deleteCanData.auth.1.req.vtl"
             ]
           ]
         },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.deleteCanData.auth.1.res.vtl"
+            ]
+          ]
+        }
+      },
+      "DependsOn": [
+        "CanDataDataSource"
+      ]
     },
     "MutationDeleteCanDataDataResolverFnMutationDeleteCanDataDataResolverFnAppSyncFunction8FC90C37": {
       "Type": "AWS::AppSync::FunctionConfiguration",
@@ -998,6 +1174,10 @@
               "/resolvers/Mutation.deleteCanData.res.vtl"
             ]
           ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
         }
       },
       "DependsOn": [
@@ -1017,9 +1197,12 @@
           "Functions": [
             {
               "Fn::GetAtt": [
-                "MutationdeleteCanDatapostAuth0FunctionMutationdeleteCanDatapostAuth0FunctionAppSyncFunctionF0FA7B2D",
+                "MutationdeleteCanDataauth0FunctionMutationdeleteCanDataauth0FunctionAppSyncFunction594EC0A9",
                 "FunctionId"
               ]
+            },
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1041,86 +1224,27 @@
               {
                 "Ref": "CanDataTable"
               },
-              "\"))\n$util.toJson({})"
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "SubscriptiononCreateCanDatapostAuth0FunctionSubscriptiononCreateCanDatapostAuth0FunctionAppSyncFunction8A5DD1F9": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononCreateCanDatapostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateCanData.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptionOnCreateCanDataDataResolverFnSubscriptionOnCreateCanDataDataResolverFnAppSyncFunctionB2849C71": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptionOnCreateCanDataDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateCanData.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateCanData.res.vtl"
-            ]
-          ]
-        }
       }
     },
     "SubscriptiononCreateCanDataResolver": {
@@ -1135,16 +1259,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateCanDatapostAuth0FunctionSubscriptiononCreateCanDatapostAuth0FunctionAppSyncFunction8A5DD1F9",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptiononCreateChartauth0FunctionSubscriptiononCreateChartauth0FunctionAppSyncFunction82565C44FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnCreateCanDataDataResolverFnSubscriptionOnCreateCanDataDataResolverFnAppSyncFunctionB2849C71",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+            },
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptionOnCreateChartDataResolverFnSubscriptionOnCreateChartDataResolverFnAppSyncFunctionD11FA004FunctionId"
             }
           ]
         },
@@ -1156,86 +1277,27 @@
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
-              "\"))\n\n$util.toJson({})"
+              "\"))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "SubscriptiononUpdateCanDatapostAuth0FunctionSubscriptiononUpdateCanDatapostAuth0FunctionAppSyncFunction71C52CA0": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononUpdateCanDatapostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onUpdateCanData.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptionOnUpdateCanDataDataResolverFnSubscriptionOnUpdateCanDataDataResolverFnAppSyncFunction070105A9": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptionOnUpdateCanDataDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onUpdateCanData.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onUpdateCanData.res.vtl"
-            ]
-          ]
-        }
       }
     },
     "SubscriptiononUpdateCanDataResolver": {
@@ -1250,16 +1312,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononUpdateCanDatapostAuth0FunctionSubscriptiononUpdateCanDatapostAuth0FunctionAppSyncFunction71C52CA0",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptiononCreateChartauth0FunctionSubscriptiononCreateChartauth0FunctionAppSyncFunction82565C44FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnUpdateCanDataDataResolverFnSubscriptionOnUpdateCanDataDataResolverFnAppSyncFunction070105A9",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+            },
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptionOnCreateChartDataResolverFnSubscriptionOnCreateChartDataResolverFnAppSyncFunctionD11FA004FunctionId"
             }
           ]
         },
@@ -1271,86 +1330,27 @@
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
-              "\"))\n\n$util.toJson({})"
+              "\"))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "SubscriptiononDeleteCanDatapostAuth0FunctionSubscriptiononDeleteCanDatapostAuth0FunctionAppSyncFunctionFA0A2A3B": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononDeleteCanDatapostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onDeleteCanData.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptionOnDeleteCanDataDataResolverFnSubscriptionOnDeleteCanDataDataResolverFnAppSyncFunctionF65986AE": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptionOnDeleteCanDataDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onDeleteCanData.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onDeleteCanData.res.vtl"
-            ]
-          ]
-        }
       }
     },
     "SubscriptiononDeleteCanDataResolver": {
@@ -1365,16 +1365,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononDeleteCanDatapostAuth0FunctionSubscriptiononDeleteCanDatapostAuth0FunctionAppSyncFunctionFA0A2A3B",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptiononCreateChartauth0FunctionSubscriptiononCreateChartauth0FunctionAppSyncFunction82565C44FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnDeleteCanDataDataResolverFnSubscriptionOnDeleteCanDataDataResolverFnAppSyncFunctionF65986AE",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+            },
+            {
+              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptionOnCreateChartDataResolverFnSubscriptionOnCreateChartDataResolverFnAppSyncFunctionD11FA004FunctionId"
             }
           ]
         },
@@ -1386,7 +1383,23 @@
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },
-              "\"))\n\n$util.toJson({})"
+              "\"))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
             ]
           ]
         },

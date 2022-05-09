@@ -1,23 +1,60 @@
 
-type Post {
+type Chart @aws_iam @aws_api_key {
+  id: ID!
+  type: String!
+  title: String!
+  period: String!
+  isDisplayed: Boolean!
+  signal: String!
+  CSSId: String!
+  filter: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Card @aws_iam @aws_api_key {
+  id: ID!
+  CSSId: String!
+  type: String!
+  title: String!
+  period: String!
+  isDisplayed: Boolean!
+  signal: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Post @aws_iam @aws_api_key {
   id: ID!
   name: String!
   description: String
   devices: [String!]
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
 }
 
-type CanData {
+type CanData @aws_iam @aws_api_key {
   id: ID!
   deviceID: String!
   Signal: String!
   PhysicalValue: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
 }
 
-type Device {
+type Device @aws_iam @aws_api_key {
   id: ID!
   CSSId: String!
   Location: String
@@ -27,6 +64,9 @@ type Device {
   DateActivated: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
 }
 
 input ModelStringInput {
@@ -120,9 +160,184 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelPostConnection {
+type ModelChartConnection @aws_api_key @aws_iam {
+  items: [Chart]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelChartFilterInput {
+  id: ModelIDInput
+  type: ModelStringInput
+  title: ModelStringInput
+  period: ModelStringInput
+  isDisplayed: ModelBooleanInput
+  signal: ModelStringInput
+  CSSId: ModelStringInput
+  filter: ModelStringInput
+  and: [ModelChartFilterInput]
+  or: [ModelChartFilterInput]
+  not: ModelChartFilterInput
+}
+
+type Query {
+  getChart(id: ID!): Chart @aws_api_key @aws_iam
+  listCharts(filter: ModelChartFilterInput, limit: Int, nextToken: String): ModelChartConnection @aws_api_key @aws_iam
+  syncCharts(filter: ModelChartFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelChartConnection @aws_api_key @aws_iam
+  getCard(id: ID!): Card @aws_api_key @aws_iam
+  listCards(filter: ModelCardFilterInput, limit: Int, nextToken: String): ModelCardConnection @aws_api_key @aws_iam
+  syncCards(filter: ModelCardFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCardConnection @aws_api_key @aws_iam
+  getPost(id: ID!): Post @aws_api_key @aws_iam
+  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection @aws_api_key @aws_iam
+  syncPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPostConnection @aws_api_key @aws_iam
+  getCanData(id: ID!): CanData @aws_api_key @aws_iam
+  listCanData(filter: ModelCanDataFilterInput, limit: Int, nextToken: String): ModelCanDataConnection @aws_api_key @aws_iam
+  syncCanData(filter: ModelCanDataFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCanDataConnection @aws_api_key @aws_iam
+  getDevice(id: ID!): Device @aws_api_key @aws_iam
+  listDevices(filter: ModelDeviceFilterInput, limit: Int, nextToken: String): ModelDeviceConnection @aws_api_key @aws_iam
+  syncDevices(filter: ModelDeviceFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelDeviceConnection @aws_api_key @aws_iam
+}
+
+input ModelChartConditionInput {
+  type: ModelStringInput
+  title: ModelStringInput
+  period: ModelStringInput
+  isDisplayed: ModelBooleanInput
+  signal: ModelStringInput
+  CSSId: ModelStringInput
+  filter: ModelStringInput
+  and: [ModelChartConditionInput]
+  or: [ModelChartConditionInput]
+  not: ModelChartConditionInput
+}
+
+input CreateChartInput {
+  id: ID
+  type: String!
+  title: String!
+  period: String!
+  isDisplayed: Boolean!
+  signal: String!
+  CSSId: String!
+  filter: String!
+  _version: Int
+}
+
+input UpdateChartInput {
+  id: ID!
+  type: String
+  title: String
+  period: String
+  isDisplayed: Boolean
+  signal: String
+  CSSId: String
+  filter: String
+  _version: Int
+}
+
+input DeleteChartInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createChart(input: CreateChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
+  updateChart(input: UpdateChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
+  deleteChart(input: DeleteChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
+  createCard(input: CreateCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam
+  updateCard(input: UpdateCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam
+  deleteCard(input: DeleteCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam
+  createPost(input: CreatePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  updatePost(input: UpdatePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  deletePost(input: DeletePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  createCanData(input: CreateCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
+  updateCanData(input: UpdateCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
+  deleteCanData(input: DeleteCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
+  createDevice(input: CreateDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
+  updateDevice(input: UpdateDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
+  deleteDevice(input: DeleteDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
+}
+
+type Subscription {
+  onCreateChart: Chart @aws_subscribe(mutations: ["createChart"]) @aws_api_key @aws_iam
+  onUpdateChart: Chart @aws_subscribe(mutations: ["updateChart"]) @aws_api_key @aws_iam
+  onDeleteChart: Chart @aws_subscribe(mutations: ["deleteChart"]) @aws_api_key @aws_iam
+  onCreateCard: Card @aws_subscribe(mutations: ["createCard"]) @aws_api_key @aws_iam
+  onUpdateCard: Card @aws_subscribe(mutations: ["updateCard"]) @aws_api_key @aws_iam
+  onDeleteCard: Card @aws_subscribe(mutations: ["deleteCard"]) @aws_api_key @aws_iam
+  onCreatePost: Post @aws_subscribe(mutations: ["createPost"]) @aws_api_key @aws_iam
+  onUpdatePost: Post @aws_subscribe(mutations: ["updatePost"]) @aws_api_key @aws_iam
+  onDeletePost: Post @aws_subscribe(mutations: ["deletePost"]) @aws_api_key @aws_iam
+  onCreateCanData: CanData @aws_subscribe(mutations: ["createCanData"]) @aws_api_key @aws_iam
+  onUpdateCanData: CanData @aws_subscribe(mutations: ["updateCanData"]) @aws_api_key @aws_iam
+  onDeleteCanData: CanData @aws_subscribe(mutations: ["deleteCanData"]) @aws_api_key @aws_iam
+  onCreateDevice: Device @aws_subscribe(mutations: ["createDevice"]) @aws_api_key @aws_iam
+  onUpdateDevice: Device @aws_subscribe(mutations: ["updateDevice"]) @aws_api_key @aws_iam
+  onDeleteDevice: Device @aws_subscribe(mutations: ["deleteDevice"]) @aws_api_key @aws_iam
+}
+
+type ModelCardConnection @aws_api_key @aws_iam {
+  items: [Card]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCardFilterInput {
+  id: ModelIDInput
+  CSSId: ModelStringInput
+  type: ModelStringInput
+  title: ModelStringInput
+  period: ModelStringInput
+  isDisplayed: ModelBooleanInput
+  signal: ModelStringInput
+  and: [ModelCardFilterInput]
+  or: [ModelCardFilterInput]
+  not: ModelCardFilterInput
+}
+
+input ModelCardConditionInput {
+  CSSId: ModelStringInput
+  type: ModelStringInput
+  title: ModelStringInput
+  period: ModelStringInput
+  isDisplayed: ModelBooleanInput
+  signal: ModelStringInput
+  and: [ModelCardConditionInput]
+  or: [ModelCardConditionInput]
+  not: ModelCardConditionInput
+}
+
+input CreateCardInput {
+  id: ID
+  CSSId: String!
+  type: String!
+  title: String!
+  period: String!
+  isDisplayed: Boolean!
+  signal: String
+  _version: Int
+}
+
+input UpdateCardInput {
+  id: ID!
+  CSSId: String
+  type: String
+  title: String
+  period: String
+  isDisplayed: Boolean
+  signal: String
+  _version: Int
+}
+
+input DeleteCardInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelPostConnection @aws_api_key @aws_iam {
   items: [Post]!
   nextToken: String
+  startedAt: AWSTimestamp
 }
 
 input ModelPostFilterInput {
@@ -133,15 +348,6 @@ input ModelPostFilterInput {
   and: [ModelPostFilterInput]
   or: [ModelPostFilterInput]
   not: ModelPostFilterInput
-}
-
-type Query {
-  getPost(id: ID!): Post
-  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection
-  getCanData(id: ID!): CanData
-  listCanData(filter: ModelCanDataFilterInput, limit: Int, nextToken: String): ModelCanDataConnection
-  getDevice(id: ID!): Device
-  listDevices(filter: ModelDeviceFilterInput, limit: Int, nextToken: String): ModelDeviceConnection
 }
 
 input ModelPostConditionInput {
@@ -158,6 +364,7 @@ input CreatePostInput {
   name: String!
   description: String
   devices: [String!]
+  _version: Int
 }
 
 input UpdatePostInput {
@@ -165,39 +372,18 @@ input UpdatePostInput {
   name: String
   description: String
   devices: [String!]
+  _version: Int
 }
 
 input DeletePostInput {
   id: ID!
+  _version: Int
 }
 
-type Mutation {
-  createPost(input: CreatePostInput!, condition: ModelPostConditionInput): Post
-  updatePost(input: UpdatePostInput!, condition: ModelPostConditionInput): Post
-  deletePost(input: DeletePostInput!, condition: ModelPostConditionInput): Post
-  createCanData(input: CreateCanDataInput!, condition: ModelCanDataConditionInput): CanData
-  updateCanData(input: UpdateCanDataInput!, condition: ModelCanDataConditionInput): CanData
-  deleteCanData(input: DeleteCanDataInput!, condition: ModelCanDataConditionInput): CanData
-  createDevice(input: CreateDeviceInput!, condition: ModelDeviceConditionInput): Device
-  updateDevice(input: UpdateDeviceInput!, condition: ModelDeviceConditionInput): Device
-  deleteDevice(input: DeleteDeviceInput!, condition: ModelDeviceConditionInput): Device
-}
-
-type Subscription {
-  onCreatePost: Post @aws_subscribe(mutations: ["createPost"])
-  onUpdatePost: Post @aws_subscribe(mutations: ["updatePost"])
-  onDeletePost: Post @aws_subscribe(mutations: ["deletePost"])
-  onCreateCanData: CanData @aws_subscribe(mutations: ["createCanData"])
-  onUpdateCanData: CanData @aws_subscribe(mutations: ["updateCanData"])
-  onDeleteCanData: CanData @aws_subscribe(mutations: ["deleteCanData"])
-  onCreateDevice: Device @aws_subscribe(mutations: ["createDevice"])
-  onUpdateDevice: Device @aws_subscribe(mutations: ["updateDevice"])
-  onDeleteDevice: Device @aws_subscribe(mutations: ["deleteDevice"])
-}
-
-type ModelCanDataConnection {
+type ModelCanDataConnection @aws_api_key @aws_iam {
   items: [CanData]!
   nextToken: String
+  startedAt: AWSTimestamp
 }
 
 input ModelCanDataFilterInput {
@@ -224,6 +410,7 @@ input CreateCanDataInput {
   deviceID: String!
   Signal: String!
   PhysicalValue: String!
+  _version: Int
 }
 
 input UpdateCanDataInput {
@@ -231,15 +418,18 @@ input UpdateCanDataInput {
   deviceID: String
   Signal: String
   PhysicalValue: String
+  _version: Int
 }
 
 input DeleteCanDataInput {
   id: ID!
+  _version: Int
 }
 
-type ModelDeviceConnection {
+type ModelDeviceConnection @aws_api_key @aws_iam {
   items: [Device]!
   nextToken: String
+  startedAt: AWSTimestamp
 }
 
 input ModelDeviceFilterInput {
@@ -275,6 +465,7 @@ input CreateDeviceInput {
   isAcive: Boolean!
   PostID: String!
   DateActivated: String!
+  _version: Int
 }
 
 input UpdateDeviceInput {
@@ -285,9 +476,11 @@ input UpdateDeviceInput {
   isAcive: Boolean
   PostID: String
   DateActivated: String
+  _version: Int
 }
 
 input DeleteDeviceInput {
   id: ID!
+  _version: Int
 }
 

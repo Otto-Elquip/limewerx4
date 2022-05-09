@@ -3,12 +3,21 @@
   "serviceConfiguration": {
     "apiName": "limewerx",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "C:\\Users\\Elquip\\Documents\\Elquip\\AWSAmplify\\limewerx3\\amplify\\backend\\api\\limewerx\\schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-5e07c860-6c9a-4448-bf9a-90a1bd6c7377/amplify/backend/api/limewerx/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "expirationTime": 365,
-      "apiKeyExpirationDate": "2023-03-29T05:07:19.594Z",
-      "keyDescription": "public"
-    }
+      "keyDescription": "api key description",
+      "expirationTime": 30
+    },
+    "conflictResolution": {
+      "defaultResolutionStrategy": {
+        "type": "AUTOMERGE"
+      }
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AWS_IAM"
+      }
+    ]
   }
 }

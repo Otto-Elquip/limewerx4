@@ -5,7 +5,7 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const links = [
   { name: "HOME", to: "#Home", id: 1 },
-  { name: "ABOUT", to: "#About", id: 2 },
+  { name: "myProfile", to: "/myProfile", id: 2 },
   { name: "myVehicles", to: "/myVehicles", id: 3 },
   { name: "CONTACT", to: "#Contact", id: 4 },
 ];

@@ -1,22 +1,39 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+type Chart @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String!
+  title: String!
+  period: String!
+  isDisplayed: Boolean!
+  signal: String!
+  CSSId: String!
+  filter: String!
+}
 
-type Post @model {
+type Card @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  CSSId: String!
+  type: String!
+  title: String!
+  period: String!
+  isDisplayed: Boolean!
+  signal: String
+}
+
+type Post @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   description: String
   devices: [String!]
 }
 
-type CanData @model {
+type CanData @model @auth(rules: [{allow: public}]) {
   id: ID!
   deviceID: String!
   Signal: String!
   PhysicalValue: String!
 }
 
-type Device @model {
+type Device @model @auth(rules: [{allow: public}]) {
   id: ID!
   CSSId: String!
   Location: String
@@ -25,3 +42,4 @@ type Device @model {
   PostID: String!
   DateActivated: String!
 }
+ 

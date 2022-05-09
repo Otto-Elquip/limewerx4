@@ -1,5 +1,39 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
+export const createCard = /* GraphQL */ `
+  mutation CreateCard(
+    $input: CreateCardInput!
+    $condition: ModelCardConditionInput
+  ) {
+    createCard(input: $input, condition: $condition) {
+      id
+      CSSId
+      type
+      title
+      period
+      signal
+      isDisplayed
+    }
+  }
+`;
+
+export const createChart = /* GraphQL */ `
+  mutation CreateChart(
+    $input: CreateChartInput!
+    $condition: ModelChartConditionInput
+  ) {
+    createChart(input: $input, condition: $condition) {
+      id
+      type
+      title
+      period
+      isDisplayed
+      signal
+      CSSId
+      filter
+    }
+  }
+`;
 
 export const createPost = /* GraphQL */ `
   mutation CreatePost(

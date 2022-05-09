@@ -21,40 +21,54 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 365,
-              "apiKeyExpirationDate": "2023-03-29T05:07:19.594Z",
-              "description": "public"
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         },
         "GraphQLAPIIdOutput": "tsjlp7jo3rhktjq3aq7zkvocta",
         "GraphQLAPIEndpointOutput": "https://nw66crvzmzehho3sdw4lxv3l34.appsync-api.ap-southeast-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-3ifxibki6vekbjboiashqu7wpm"
       },
+      "dependsOn": [],
+      "lastPushTimeStamp": "2022-05-08T21:45:50.013Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apilimewerx"
       },
-      "lastPushTimeStamp": "2022-04-27T06:07:06.855Z",
-      "lastPushDirHash": "/+Cx9Ms5Z59h0GXrhJmvPuF+HUI="
+      "lastPushDirHash": "DUusKAwWHIz4TfLlKGV2bcQ8ems="
     }
   },
   "auth": {
-    "limewerx0c298031": {
+    "limewerx": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": [],
-        "signupAttributes": [
+        "usernameAttributes": [
           "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL",
+          "GIVEN_NAME",
+          "FAMILY_NAME",
+          "ADDRESS"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+          ]
         },
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -64,11 +78,20 @@
           "EMAIL"
         ]
       },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/auth/limewerx0c298031-cloudformation-template.json",
-        "logicalId": "authlimewerx0c298031"
+      "output": {
+        "UserPoolId": "ap-southeast-2_2GULmTf5B",
+        "AppClientIDWeb": "28rl026hfi6u7v5levktdjlinl",
+        "AppClientID": "76fk3omt67ht10qoetn2bvpbkf",
+        "IdentityPoolId": "ap-southeast-2:ae6f1764-4965-4c9f-a320-0a38f48c590d",
+        "UserPoolArn": "arn:aws:cognito-idp:ap-southeast-2:136436761917:userpool/ap-southeast-2_2GULmTf5B",
+        "IdentityPoolName": "testAuthIdentityPool__dev",
+        "UserPoolName": "limewerx"
       },
-      "lastPushTimeStamp": "2022-04-27T06:07:28.153Z"
+      "lastPushTimeStamp": "2022-05-08T21:45:50.021Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/auth/limewerx-cloudformation-template.json",
+        "logicalId": "authlimewerx"
+      }
     }
   }
 }

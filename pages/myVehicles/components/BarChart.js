@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState} from "react";
 import Chart from "chart.js/auto";
-import { listCharts } from "../../../graphql/queries";
-import { API } from "aws-amplify";
+
 
 const BarChart = (chartData) =>  {
 
@@ -19,10 +18,8 @@ const BarChart = (chartData) =>  {
     }
   };
 
-  console.log(chartData)
   useEffect(() => {
     const ctx = canvasEl.current.getContext("2d");
-    // const ctx = document.getElementById("myChart");
     ctx.canvas.parentNode.style.height = '50px';
 
     const gradient = ctx.createLinearGradient(0, 16, 0, 600);
@@ -31,14 +28,13 @@ const BarChart = (chartData) =>  {
     gradient.addColorStop(1, colors.purple.zero);
 
     const new_weight = chartData.chartData.data;
-
     const new_labels = chartData.chartData.label;
     const data = {
       labels: new_labels,
       datasets: [
         {
           backgroundColor: gradient,
-          label: chartData.chartData.title,
+          label: `${chartData.chartData.title} (${chartData.chartData.period})`,
           data: new_weight,
           fill: true,
           borderWidth: 2,

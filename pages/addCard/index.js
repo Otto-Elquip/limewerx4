@@ -33,6 +33,7 @@ function CreateCard() {
 
     async function getSignalList() {
         let filterStr = {deviceID: {eq: device}};
+        console.log(filterStr)
         const signalList = await API.graphql({
             query: listCanData, variables: {filter: filterStr}});
         const signalSet = [...new Set(signalList.data.listCanData.items.map(item => item.Signal))];

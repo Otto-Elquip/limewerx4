@@ -3,12 +3,27 @@ import { API, label } from 'aws-amplify'
 import { listDevices, listCanData, listPosts, listCards, listCharts} from '../../graphql/queries'
 import { ButtonGroup, IconRouter } from "@aws-amplify/ui-react";
 import Navbar from "../components/Navbar";
+import Alerts from "./components/Alerts";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as ReactBootStrap from 'react-bootstrap';
 import BarChart from './components/BarChart';
 import { Card, Row, Col, Container }from 'react-bootstrap';
 import Link from 'next/link';
-import { DatabaseIcon } from "@heroicons/react/outline";
+import { CSVLink, CSVDownload } from 'react-csv'
+
+const csvHeaders = [
+    { label: 'Physical Value', key: 'PhysicalValue'},
+    { label: 'Signal', key: 'Signal'},
+    { label: 'Date Created', key: 'createdAt'},
+    { label: 'Index', key: 'id'},
+    { label: 'Date Updated', key: 'updatedAt'}
+];
+
+var initialCSVState = {
+    filename: "NoVehicleSelected.csv",
+    headers: csvHeaders,
+    data: [{PhysicalValue: ' ', Signal: ' ', createdAt: ' ', deviceID: '', id: '', updatedAt: ''}]
+};
 
 
 export default function Home({deviceList, deviceIDs}){
@@ -17,9 +32,11 @@ export default function Home({deviceList, deviceIDs}){
     const [chartData, setChartData] = useState([]);
     const [tabColours, setTabColours] = useState(['none', 'grey', 'grey', 'grey'])
     const [dList, setDList] = useState(deviceList);
+    const [csvData, setCSVData] = useState(initialCSVState);
     const [deviceID, setDeviceID] = useState("");
     const [canData, setCanData] = useState([]);
     const [cardData, setCardData] = useState([]);
+
     useEffect(() => {
         fetchCanData()
       }, [deviceID]);
@@ -52,6 +69,19 @@ export default function Home({deviceList, deviceIDs}){
         const data = await API.graphql({
             query: listCanData, variables: {filter: filterStr}});
             setCanData(data.data.listCanData.items);
+        
+        const todayDate = new Date();
+        var csvReportContent = initialCSVState;
+        if(data.data.listCanData.items.length != 0)
+        {
+            csvReportContent = {
+                filename: `${deviceID}-${todayDate.toDateString()}.csv`,
+                headers: csvHeaders,
+                data: data.data.listCanData.items
+            }
+        }
+
+        setCSVData(csvReportContent);
         const cards = await API.graphql({
             query: listCards,
             variables: {filter: filterStr2}
@@ -160,7 +190,7 @@ export default function Home({deviceList, deviceIDs}){
                 }
                 sortedData.push(temp);
             })
-            var graphDataInstance = {label: labels, data: sortedData, title: chart.title, type: chart.type};
+            var graphDataInstance = {label: labels, data: sortedData, title: chart.title, type: chart.type, period: chart.period};
             gData.push(graphDataInstance);
         })
         setChartData(gData);
@@ -173,7 +203,7 @@ export default function Home({deviceList, deviceIDs}){
                     allowableCardDiff = 1;
                     break;
                 case 'Last Week':
-                    allowableCardDiff = 7;
+                    allowableCardDiff = 8;
                     break;
                 case 'Last Month':
                     allowableCardDiff = 31;
@@ -192,6 +222,7 @@ export default function Home({deviceList, deviceIDs}){
                 var date2 = new Date(dateString);
                 var timeDiff = date1.getTime() - date2.getTime();
                 var dayDiff = timeDiff/(1000*3600*24);
+                console.log(dayDiff)
                 if(dayDiff < allowableCardDiff)
                 {
                     values.push(parseInt(e.PhysicalValue))
@@ -202,16 +233,37 @@ export default function Home({deviceList, deviceIDs}){
             switch(card.type)
             {
                 case 'Max':
+                    if(values.length>0)
+                    {
                     var cardVal = Math.max.apply(Math, values);
+                    }
+                    else
+                    {
+                        var cardVal = 'No data available for this time period';
+                    }
                     cData.push({Signal: card.title, Value: cardVal, Units: ''});
                     break;
                 case 'Min':
-                    var cardVal = Math.min.apply(Math, values);
+                    if(values.length>0)
+                    {
+                        var cardVal = Math.min.apply(Math, values);
+                    }
+                    else
+                    {
+                        var cardVal = 'No data available for this time period';
+                    }
                     cData.push({Signal: card.title, Value: cardVal, Units: ''});
                     break;
                 case 'Average':
-                    var sum = values.reduce((a, b) => a + b, 0);
-                    var avg = (sum/values.length) || 0;
+                    if(values.length>0)
+                    {
+                        var sum = values.reduce((a, b) => a + b, 0);
+                        var avg = (sum/values.length) || 0;
+                    }
+                    else
+                    {
+                        var avg = 'No data available for this time period';
+                    }
                     cData.push({Signal: card.title, Value: avg, Units: ''});
                     break;
             }          
@@ -263,6 +315,8 @@ export default function Home({deviceList, deviceIDs}){
             <hr style={{color: 'black', height: 5}} />
 
             {tab == 1 && (
+                <div>
+                    <CSVLink {...csvData}> Download Table Data to CSV</CSVLink>
                     <ReactBootStrap.Table striped bordered hover>
                         <thead>
                             <tr>
@@ -276,6 +330,7 @@ export default function Home({deviceList, deviceIDs}){
                             {canData.map(renderData)}
                         </tbody>
                     </ReactBootStrap.Table>  
+                </div>
             )}
             {tab== 2 && (
                 <Container>
@@ -350,7 +405,10 @@ export default function Home({deviceList, deviceIDs}){
                     
             )}
             {tab == 3 && (
-                <h3 className="text-1xl font-semibold tracking-wide mt-6 mb-2" style={{paddingTop: '10px', paddingLeft: '15px'}} >You currently do not have any alerts</h3>
+                <>
+                    <h3 className="text-1xl font-semibold tracking-wide mt-6 mb-2" style={{paddingTop: '10px', paddingLeft: '15px'}} >You currently do not have any alerts</h3>
+                    <Alerts deviceID={deviceID}/>
+                </>
             )}
             {tab == 4 && (
                 <h3 className="text-1xl font-semibold tracking-wide mt-6 mb-2" style={{paddingTop: '10px', paddingLeft: '15px'}} >You currently do not have any files uploaded</h3>

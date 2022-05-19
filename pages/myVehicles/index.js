@@ -1,7 +1,7 @@
 import { useState, useEffect, React} from "react";
 import { API, label } from 'aws-amplify'
 import { listDevices, listCanData, listPosts, listCards, listCharts} from '../../graphql/queries'
-import { ButtonGroup, IconRouter } from "@aws-amplify/ui-react";
+import { ButtonGroup } from "@aws-amplify/ui-react";
 import Navbar from "../components/Navbar";
 import Alerts from "./components/Alerts";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,7 +9,7 @@ import * as ReactBootStrap from 'react-bootstrap';
 import BarChart from './components/BarChart';
 import { Card, Row, Col, Container }from 'react-bootstrap';
 import Link from 'next/link';
-import { CSVLink, CSVDownload } from 'react-csv'
+import { CSVLink } from 'react-csv'
 
 const csvHeaders = [
     { label: 'Physical Value', key: 'PhysicalValue'},
@@ -222,7 +222,6 @@ export default function Home({deviceList, deviceIDs}){
                 var date2 = new Date(dateString);
                 var timeDiff = date1.getTime() - date2.getTime();
                 var dayDiff = timeDiff/(1000*3600*24);
-                console.log(dayDiff)
                 if(dayDiff < allowableCardDiff)
                 {
                     values.push(parseInt(e.PhysicalValue))
@@ -406,7 +405,7 @@ export default function Home({deviceList, deviceIDs}){
             )}
             {tab == 3 && (
                 <>
-                    <h3 className="text-1xl font-semibold tracking-wide mt-6 mb-2" style={{paddingTop: '10px', paddingLeft: '15px'}} >You currently do not have any alerts</h3>
+                    
                     <Alerts deviceID={deviceID}/>
                 </>
             )}

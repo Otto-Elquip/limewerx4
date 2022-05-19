@@ -49,10 +49,10 @@
     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
       "Type": "String"
     },
-    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartauth0FunctionQuerygetChartauth0FunctionAppSyncFunction4FF75159FunctionId": {
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction6FA80CD0FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId": {
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId": {
       "Type": "String"
     },
     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -61,19 +61,19 @@
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
       "Type": "String"
     },
-    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationcreateChartinit0FunctionMutationcreateChartinit0FunctionAppSyncFunction35486C02FunctionId": {
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertMutationcreateAlertinit0FunctionMutationcreateAlertinit0FunctionAppSyncFunction64025852FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationcreateChartauth0FunctionMutationcreateChartauth0FunctionAppSyncFunctionB9891C33FunctionId": {
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertMutationcreateAlertauth0FunctionMutationcreateAlertauth0FunctionAppSyncFunction4C4A5CA9FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationupdateChartinit0FunctionMutationupdateChartinit0FunctionAppSyncFunction270B70B2FunctionId": {
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertMutationupdateAlertinit0FunctionMutationupdateAlertinit0FunctionAppSyncFunction6F227BBAFunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptiononCreateChartauth0FunctionSubscriptiononCreateChartauth0FunctionAppSyncFunction82565C44FunctionId": {
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertSubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunctionEA672576FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptionOnCreateChartDataResolverFnSubscriptionOnCreateChartDataResolverFnAppSyncFunctionD11FA004FunctionId": {
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertSubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction149737B9FunctionId": {
       "Type": "String"
     }
   },
@@ -510,10 +510,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartauth0FunctionQuerygetChartauth0FunctionAppSyncFunction4FF75159FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction6FA80CD0FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -625,10 +625,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartauth0FunctionQuerygetChartauth0FunctionAppSyncFunction4FF75159FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction6FA80CD0FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -740,10 +740,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartauth0FunctionQuerygetChartauth0FunctionAppSyncFunction4FF75159FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction6FA80CD0FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -855,13 +855,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationcreateChartinit0FunctionMutationcreateChartinit0FunctionAppSyncFunction35486C02FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertMutationcreateAlertinit0FunctionMutationcreateAlertinit0FunctionAppSyncFunction64025852FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationcreateChartauth0FunctionMutationcreateChartauth0FunctionAppSyncFunctionB9891C33FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertMutationcreateAlertauth0FunctionMutationcreateAlertauth0FunctionAppSyncFunction4C4A5CA9FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1024,7 +1024,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartMutationupdateChartinit0FunctionMutationupdateChartinit0FunctionAppSyncFunction270B70B2FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertMutationupdateAlertinit0FunctionMutationupdateAlertinit0FunctionAppSyncFunction6F227BBAFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1033,7 +1033,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1202,7 +1202,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1259,13 +1259,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptiononCreateChartauth0FunctionSubscriptiononCreateChartauth0FunctionAppSyncFunction82565C44FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertSubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunctionEA672576FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptionOnCreateChartDataResolverFnSubscriptionOnCreateChartDataResolverFnAppSyncFunctionD11FA004FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertSubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction149737B9FunctionId"
             }
           ]
         },
@@ -1312,13 +1312,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptiononCreateChartauth0FunctionSubscriptiononCreateChartauth0FunctionAppSyncFunction82565C44FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertSubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunctionEA672576FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptionOnCreateChartDataResolverFnSubscriptionOnCreateChartDataResolverFnAppSyncFunctionD11FA004FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertSubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction149737B9FunctionId"
             }
           ]
         },
@@ -1365,13 +1365,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptiononCreateChartauth0FunctionSubscriptiononCreateChartauth0FunctionAppSyncFunction82565C44FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertSubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunctionEA672576FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartQuerygetChartpostAuth0FunctionQuerygetChartpostAuth0FunctionAppSyncFunction14D74261FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackChartNestedStackChartNestedStackResource80BBCDC6OutputstransformerrootstackChartSubscriptionOnCreateChartDataResolverFnSubscriptionOnCreateChartDataResolverFnAppSyncFunctionD11FA004FunctionId"
+              "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertSubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction149737B9FunctionId"
             }
           ]
         },

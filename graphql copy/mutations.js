@@ -17,6 +17,24 @@ export const createCard = /* GraphQL */ `
   }
 `;
 
+export const createChart = /* GraphQL */ `
+  mutation CreateChart(
+    $input: CreateChartInput!
+    $condition: ModelChartConditionInput
+  ) {
+    createChart(input: $input, condition: $condition) {
+      id
+      type
+      title
+      period
+      isDisplayed
+      signal
+      CSSId
+      filter
+    }
+  }
+`;
+
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!

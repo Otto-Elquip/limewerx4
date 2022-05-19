@@ -17,6 +17,26 @@ export const createCard = /* GraphQL */ `
   }
 `;
 
+export const createAlert = /* GraphQL */ `
+  mutation CreateAlert(
+    $input: CreateAlertInput!
+    $condition: ModelAlertConditionInput
+  ) {
+    createAlert(input: $input, condition: $condition) {
+      id
+      type
+      title
+      period
+      isDisplayed
+      signal
+      condition
+      threshold
+      deviceID
+    }
+  }
+`;
+
+
 export const createChart = /* GraphQL */ `
   mutation CreateChart(
     $input: CreateChartInput!

@@ -167,7 +167,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-limewerx-dev-160310-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/198c2e2697f9b868d28de064b40eb896d4b5c296",
+          "S3DeploymentRootKey": "amplify-appsync-files/19a7220ef3521d0251d1b2433e7278f28fe84775",
           "env": "dev"
         }
       }
@@ -305,7 +305,7 @@
           }
         },
         "Handler": "index.handler",
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 300,
         "Role": {
           "Fn::GetAtt": [

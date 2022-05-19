@@ -1,3 +1,15 @@
+type Alert @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String!
+  title: String!
+  period: String!
+  isDisplayed: Boolean!
+  signal: String!
+  condition: String!
+  threshold: String!
+  deviceID: ID! @index(name: "byDevice")
+}
+
 type Chart @model @auth(rules: [{allow: public}]) {
   id: ID!
   type: String!
@@ -41,5 +53,6 @@ type Device @model @auth(rules: [{allow: public}]) {
   isAcive: Boolean!
   PostID: String!
   DateActivated: String!
+  Alerts: [Alert] @hasMany(indexName: "byDevice", fields: ["id"])
 }
  

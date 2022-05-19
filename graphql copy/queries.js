@@ -32,6 +32,28 @@ export const listCards = /* GraphQL */ `
     }
   }
 `;
+
+export const listCharts = /* GraphQL */ `
+  query ListCharts(
+    $filter: ModelChartFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCharts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        type
+        title
+        period
+        signal
+        filter
+        isDisplayed
+      }
+      nextToken
+    }
+  }
+`;
+
 export const listPosts = /* GraphQL */ `
   query ListPosts(
     $filter: ModelPostFilterInput

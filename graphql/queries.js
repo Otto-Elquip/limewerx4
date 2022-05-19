@@ -104,6 +104,32 @@ export const listCanData = /* GraphQL */ `
     }
   }
 `;
+
+
+export const listAlerts = /* GraphQL */ `
+  query ListAlerts(
+    $filter: ModelAlertFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAlerts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        signal
+        deviceID
+        threshold
+        title
+        type
+        condition
+        period
+        isDisplayed
+        id
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
+
 export const getDevice = /* GraphQL */ `
   query GetDevice($id: ID!) {
     getDevice(id: $id) {

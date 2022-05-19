@@ -36,12 +36,12 @@
         "GraphQLAPIKeyOutput": "da2-3ifxibki6vekbjboiashqu7wpm"
       },
       "dependsOn": [],
-      "lastPushTimeStamp": "2022-05-08T21:45:50.013Z",
+      "lastPushTimeStamp": "2022-05-18T00:00:30.756Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apilimewerx"
       },
-      "lastPushDirHash": "DUusKAwWHIz4TfLlKGV2bcQ8ems="
+      "lastPushDirHash": "/gNGbvGtVyVK4VZwULLvtL01rKg="
     }
   },
   "auth": {
@@ -87,7 +87,7 @@
         "IdentityPoolName": "testAuthIdentityPool__dev",
         "UserPoolName": "limewerx"
       },
-      "lastPushTimeStamp": "2022-05-08T21:45:50.021Z",
+      "lastPushTimeStamp": "2022-05-18T00:00:30.762Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/auth/limewerx-cloudformation-template.json",
         "logicalId": "authlimewerx"

@@ -16,5 +16,11 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientIDWeb": "string",
             "AppClientID": "string"
         }
+    },
+    "storage": {
+        "s3limewerxstorage4eff9800": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
 }

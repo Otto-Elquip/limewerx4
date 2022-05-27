@@ -1,7 +1,7 @@
 {
   "identityPoolName": "testAuthIdentityPool",
   "allowUnauthenticatedIdentities": false,
-  "resourceNameTruncated": "limewea3e75062",
+  "resourceNameTruncated": "limewec2be0633",
   "userPoolName": "limewerx",
   "autoVerifiedAttributes": [
     "email"
@@ -19,23 +19,17 @@
   "passwordPolicyCharacters": [
     "Requires Lowercase",
     "Requires Numbers",
-    "Requires Symbols",
     "Requires Uppercase"
   ],
-  "requiredAttributes": [
-    "email",
-    "given_name",
-    "family_name",
-    "address"
-  ],
+  "requiredAttributes": [],
   "aliasAttributes": [],
   "userpoolClientGenerateSecret": false,
   "userpoolClientRefreshTokenValidity": 30,
   "userpoolClientWriteAttributes": [],
   "userpoolClientReadAttributes": [],
-  "userpoolClientLambdaRole": "limewea3e75062_userpoolclient_lambda_role",
+  "userpoolClientLambdaRole": "limewec2be0633_userpoolclient_lambda_role",
   "userpoolClientSetAttributes": false,
-  "sharedId": "a3e75062",
+  "sharedId": "c2be0633",
   "resourceName": "limewerx",
   "authSelections": "identityPoolAndUserPool",
   "serviceName": "Cognito",

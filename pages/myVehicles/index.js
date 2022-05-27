@@ -1,15 +1,20 @@
 import { useState, useEffect, React} from "react";
-import { API, label } from 'aws-amplify'
-import { listDevices, listCanData, listPosts, listCards, listCharts} from '../../graphql/queries'
-import { ButtonGroup } from "@aws-amplify/ui-react";
-import Navbar from "../components/Navbar";
+import { API } from 'aws-amplify';
+import { listDevices, listCanData, listAccounts, listCards, listCharts} from '../../graphql/queries'
+import { updateCard, updateChart } from '../../graphql/mutations'
+import { ButtonGroup, withAuthenticator } from "@aws-amplify/ui-react";
+import Navbar2 from "../components/Navbar";
 import Alerts from "./components/Alerts";
+import RegisterDevice from "./components/RegisterDevice";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as ReactBootStrap from 'react-bootstrap';
 import BarChart from './components/BarChart';
 import { Card, Row, Col, Container }from 'react-bootstrap';
 import Link from 'next/link';
 import { CSVLink } from 'react-csv'
+import ReactTooltip from "react-tooltip";
+import { Auth } from 'aws-amplify';
+
 
 const csvHeaders = [
     { label: 'Physical Value', key: 'PhysicalValue'},
@@ -26,23 +31,63 @@ var initialCSVState = {
 };
 
 
-export default function Home({deviceList, deviceIDs}){
+function Home({deviceList, deviceIDs, user}){
 
     const [tab, setTab] = useState(1);
     const [chartData, setChartData] = useState([]);
     const [tabColours, setTabColours] = useState(['none', 'grey', 'grey', 'grey'])
-    const [dList, setDList] = useState(deviceList);
+    const [dList, setDList] = useState([]);
     const [csvData, setCSVData] = useState(initialCSVState);
     const [deviceID, setDeviceID] = useState("");
     const [canData, setCanData] = useState([]);
     const [cardData, setCardData] = useState([]);
+    const [showDelete, setShowDelete] = useState(true);
+    const [newDevice, setNewDevice] = useState(false);
+    const [accountID, setAccountID] = useState();
+    const [authenticated, setAuthenticated] = useState();
 
     useEffect(() => {
-        fetchCanData()
+        setAccountID(user.username);
+        setDeviceList(deviceList);
+        checkAuth();
+    }, [])
+
+    const checkAuth = () =>
+    {
+      
+      Promise.all([Auth.currentUserCredentials()])
+      .then( result => {
+        const [a] = result;
+        console.log(a.authenticated)
+        if(a.authenticated == true)
+        {
+          setAuthenticated(true);
+        }
+        if(a.authenticated == undefined)
+        {
+          setAuthenticated(false);
+        }
+      })
+    }
+
+    async function setDeviceList(dl){
+        let filterStr = {CognitoUserName: {eq: user.username}}
+        const accountList = await API.graphql({
+            query: listAccounts, 
+            variables: {filter: filterStr}
+        })
+        var userId = accountList.data.listAccounts.items[0].id
+        console.log('setting device list')
+        console.log(dl.filter(x => x.accountID ==userId))
+        setDList(dl.filter(x => x.accountID ==userId));
+    }
+
+    useEffect(() => {
+        fetchCanData();
       }, [deviceID]);
 
     useEffect(() => {
-        setTabLayout(tab)
+        setTabLayout(tab);
     }, [tab])
 
     const setTabLayout = (t) => {
@@ -64,6 +109,7 @@ export default function Home({deviceList, deviceIDs}){
     }
 
       async function fetchCanData() {
+
         let filterStr = {deviceID: {eq: deviceID}};
         let filterStr2 = {CSSId: {eq: deviceID}};
         const data = await API.graphql({
@@ -92,7 +138,8 @@ export default function Home({deviceList, deviceIDs}){
         variables: filterStr3
         });
         var gData = [];
-        chartList.data.listCharts.items.forEach(function(chart){
+        var displayedCharts = chartList.data.listCharts.items.filter(x => x.isDisplayed == true);
+        displayedCharts.forEach(function(chart){
             const rn = new Date();
             var labels = [];
             var graphData = [];
@@ -190,13 +237,14 @@ export default function Home({deviceList, deviceIDs}){
                 }
                 sortedData.push(temp);
             })
-            var graphDataInstance = {label: labels, data: sortedData, title: chart.title, type: chart.type, period: chart.period};
+            var graphDataInstance = {label: labels, data: sortedData, title: chart.title, type: chart.type, period: chart.period, id: chart.id, version: chart._version};
             gData.push(graphDataInstance);
         })
         setChartData(gData);
         var allowableCardDiff = 0;
         var cData = [];
-        cards.data.listCards.items.forEach(function(card){
+        var displayedCards = cards.data.listCards.items.filter(x => x.isDisplayed == true)
+        displayedCards.forEach(function(card){
             switch(card.period)
             {
                 case 'Last 24 Hours':
@@ -228,7 +276,6 @@ export default function Home({deviceList, deviceIDs}){
                 }
                 
             })
-
             switch(card.type)
             {
                 case 'Max':
@@ -240,7 +287,7 @@ export default function Home({deviceList, deviceIDs}){
                     {
                         var cardVal = 'No data available for this time period';
                     }
-                    cData.push({Signal: card.title, Value: cardVal, Units: ''});
+                    cData.push({Signal: card.title, Value: cardVal, Units: '', id: card.id, version: card._version});
                     break;
                 case 'Min':
                     if(values.length>0)
@@ -251,7 +298,7 @@ export default function Home({deviceList, deviceIDs}){
                     {
                         var cardVal = 'No data available for this time period';
                     }
-                    cData.push({Signal: card.title, Value: cardVal, Units: ''});
+                    cData.push({Signal: card.title, Value: cardVal, Units: '', id: card.id, version: card._version});
                     break;
                 case 'Average':
                     if(values.length>0)
@@ -263,14 +310,12 @@ export default function Home({deviceList, deviceIDs}){
                     {
                         var avg = 'No data available for this time period';
                     }
-                    cData.push({Signal: card.title, Value: avg, Units: ''});
+                    cData.push({Signal: card.title, Value: avg, Units: '', id: card.id, version: card._version});
                     break;
             }          
         })
         setCardData(cData);
       }
-
-    
     let handleDeviceChange = (e) => {
     setDeviceID(e.target.value)
     };
@@ -286,15 +331,58 @@ export default function Home({deviceList, deviceIDs}){
         )
     }
 
+    async function deleteCardByID(cardEl)
+    {
+        var cardId = cardEl.target.name.split("!")[0].toString();
+        var versionNum = cardEl.target.name.split("!")[1].toString();
+        const cardDetails = {id: cardId, isDisplayed: false, _version: versionNum};
+        await API.graphql({
+            query: updateCard, 
+            variables: {input: cardDetails}});
+        await fetchCanData();
+    }
+    async function deleteChartByID(chartEl)
+    {
+        var chartId = chartEl.target.name.split("!")[0].toString();
+        var versionNum = chartEl.target.name.split("!")[1].toString();
+        const chartDetails = {id: chartId, isDisplayed: false, _version: versionNum};
+        await API.graphql({
+            query: updateChart, 
+            variables: {input: chartDetails}});
+        await fetchCanData();
+    }
+
+    const registerNewDevice = () =>
+    {
+        if(newDevice == false)
+        {
+            setNewDevice(true);
+        }
+        else
+        {
+            setNewDevice(false);
+        }
+    }
+    console.log(authenticated)
   return (
     <div>
-        <Navbar />
+        <Navbar2 authenticated={authenticated} />
         <h1> {"\n"} </h1>
-        <div style={{paddingLeft: '15px', paddingRight: '15px'}}> 
-            <select style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}} onChange={handleDeviceChange}>
-                <option value="Select a vehicle" style={{justifyContent: 'center'}}>---Select a Vehicle---</option>
-                {dList.map((device) => <option key={device.id} value={device.CSSId}>{device.Vehicle}</option>)}
-            </select>
+        <div style={{paddingLeft: '15px', paddingRight: '15px'}}>
+            <Col>
+                <select style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}} onChange={handleDeviceChange}>
+                    <option value="Select a vehicle" style={{justifyContent: 'center'}}>---Select a Vehicle---</option>
+                    {dList.map((device) => <option key={device.id} value={device.CSSId}>{device.Vehicle}</option>)}
+                    
+                </select>
+                <button style={{color: 'blue', paddingLeft: '10px'}} onClick={registerNewDevice}> Register New Device ↓ </button>
+            </Col>
+            {newDevice == true && (
+                <>
+                    <RegisterDevice AccountId={accountID} disp={newDevice}/>
+                
+                </>
+            )}
            <h1>
                {"\n"}
            </h1>
@@ -310,7 +398,6 @@ export default function Home({deviceList, deviceIDs}){
                 <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[3]}} onClick={() => setTab(4)}> My Files </button>
             </ButtonGroup>
             
-            <h1>{"\n"}</h1>
             <hr style={{color: 'black', height: 5}} />
 
             {tab == 1 && (
@@ -332,11 +419,11 @@ export default function Home({deviceList, deviceIDs}){
                 </div>
             )}
             {tab== 2 && (
-                <Container>
-                    <h1>
-                        {"\n"}
-                    </h1>
-                    <Row>
+
+                <Container style={{justifyContent: 'left'}}>
+                    <h3 className="text-1xl font-semibold tracking-wide mt-6 mb-2">
+                        Cards
+                    </h3>
                         <Link
                         href={{
                             pathname: '/addCard',
@@ -344,28 +431,9 @@ export default function Home({deviceList, deviceIDs}){
                         }}
                         >
                         <button 
-                        style={{ border: '1px solid black'
-                        , borderRadius: '7px'
-                        , width: '100px', height: '40px'
-                        , justifyContent: 'center'
-                        , backgroundColor: 'blue', color: 'white'}}  
-                        > Add Card </button>
+                        style={{color: 'blue'}}  
+                        > Add Card ↓ </button>
                         </Link>
-                        <Link
-                        href={{
-                            pathname: '/addChart',
-                            query: { device: deviceID },
-                        }}
-                        >
-                        <button 
-                        style={{ border: '1px solid black'
-                        , borderRadius: '7px'
-                        , width: '100px', height: '40px'
-                        , justifyContent: 'center'
-                        , backgroundColor: 'blue', color: 'white'}}  
-                        > Add Chart </button>
-                        </Link>
-                    </Row>
                     <h1>
                         {"\n"}
                     </h1>
@@ -373,7 +441,9 @@ export default function Home({deviceList, deviceIDs}){
                         {cardData.map((cardData, k) => (
                             <Col key={k} xs={12} md={3} lg={4}>
                                 <Card>
-                                <Card.Header>{cardData.Signal}</Card.Header>
+                                <Card.Header>{cardData.Signal} 
+                                <button name={`${cardData.id}!${cardData.version}`} 
+                                onClick={deleteCardByID}>🗑️</button></Card.Header>
                                 <Card.Body>
                                     <Card.Title style={{textAlign: "center"}}>{cardData.Value}</Card.Title>
                                     <Card.Text style={{textAlign: "center"}}>
@@ -386,11 +456,25 @@ export default function Home({deviceList, deviceIDs}){
                         ))}             
                         
                     </Row>
+                    <h3 className="text-1xl font-semibold tracking-wide mt-6 mb-2">
+                        Charts
+                    </h3>
+                    <Link
+                        href={{
+                            pathname: '/addChart',
+                            query: { device: deviceID },
+                        }}
+                        >
+                        <button 
+                        style={{color: 'blue'}}  
+                        > Add Chart ↓ </button>
+                        </Link>
                     <Row>
                             {chartData.map((c, k) => (
                                 <Col key={k} xs={100} md={100} lg={100}>
                                     <Card style={{height: "32vw"}}>
-                                    <Card.Header></Card.Header>
+                                    <Card.Header> <button name={`${c.id}!${c.version}`} 
+                                onClick={deleteChartByID}>🗑️</button></Card.Header>
                                     <Card.Body>
                                          <BarChart chartData={c} />
                                     </Card.Body>
@@ -400,6 +484,7 @@ export default function Home({deviceList, deviceIDs}){
                             ))}
                             
                     </Row>
+
                 </Container>
                     
             )}
@@ -418,25 +503,20 @@ export default function Home({deviceList, deviceIDs}){
 }
 
 export const getStaticProps = async () => {
-   
-    let userFilter = {id: {eq: '90aa497c-6aac-4a58-b398-095c460979fc'}};
-    const deviceIDs = await API.graphql({
-      query: listPosts, variables: {filter: userFilter}
-  })
 
-
-  const devices = await API.graphql({
-      query: listDevices
-  });
+    const devices = await API.graphql({
+        query: listDevices
+    });
   
-  const temp = devices.data.listDevices.items;
-  var deviceList = temp
-  
+    const temp = devices.data.listDevices.items;
+    var deviceList = temp
+    
 
-  return {
-      props: {
-          deviceList,
-          deviceIDs
-      }
-  }
+    return {
+        props: {
+            deviceList
+        }
+    }
 }
+
+export default withAuthenticator(Home)

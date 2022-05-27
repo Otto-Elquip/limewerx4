@@ -160,6 +160,12 @@
           "AppSyncApiName": "limewerx",
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
+          "AuthCognitoUserPoolId": {
+            "Fn::GetAtt": [
+              "authlimewerx",
+              "Outputs.UserPoolId"
+            ]
+          },
           "authRoleName": {
             "Ref": "AuthRoleName"
           },
@@ -167,7 +173,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-limewerx-dev-160310-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/19a7220ef3521d0251d1b2433e7278f28fe84775",
+          "S3DeploymentRootKey": "amplify-appsync-files/fd4229001a36393496ca9e7a419d474083901e66",
           "env": "dev"
         }
       }
@@ -179,7 +185,7 @@
         "Parameters": {
           "identityPoolName": "testAuthIdentityPool",
           "allowUnauthenticatedIdentities": false,
-          "resourceNameTruncated": "limewea3e75062",
+          "resourceNameTruncated": "limewec2be0633",
           "userPoolName": "limewerx",
           "autoVerifiedAttributes": "email",
           "mfaConfiguration": "OFF",
@@ -190,16 +196,16 @@
           "emailVerificationMessage": "Verification code: {####}",
           "defaultPasswordPolicy": false,
           "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": "Requires Lowercase,Requires Numbers,Requires Symbols,Requires Uppercase",
-          "requiredAttributes": "email,given_name,family_name,address",
+          "passwordPolicyCharacters": "Requires Lowercase,Requires Numbers,Requires Uppercase",
+          "requiredAttributes": "",
           "aliasAttributes": "",
           "userpoolClientGenerateSecret": false,
           "userpoolClientRefreshTokenValidity": 30,
           "userpoolClientWriteAttributes": "",
           "userpoolClientReadAttributes": "",
-          "userpoolClientLambdaRole": "limewea3e75062_userpoolclient_lambda_role",
+          "userpoolClientLambdaRole": "limewec2be0633_userpoolclient_lambda_role",
           "userpoolClientSetAttributes": false,
-          "sharedId": "a3e75062",
+          "sharedId": "c2be0633",
           "resourceName": "limewerx",
           "authSelections": "identityPoolAndUserPool",
           "serviceName": "Cognito",
@@ -226,6 +232,39 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
+          "env": "dev"
+        }
+      }
+    },
+    "storages3limewerxstorage4eff9800": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "Parameters": {
+          "bucketName": "limewerx-storage-4eff9800",
+          "selectedGuestPermissions": "",
+          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject",
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "s3PrivatePolicy": "Private_policy_646575dd",
+          "s3ProtectedPolicy": "Protected_policy_646575dd",
+          "s3PublicPolicy": "Public_policy_646575dd",
+          "s3ReadPolicy": "read_policy_646575dd",
+          "s3UploadsPolicy": "Uploads_policy_646575dd",
+          "authPolicyName": "s3_amplify_646575dd",
+          "unauthPolicyName": "s3_amplify_646575dd",
+          "AuthenticatedAllowList": "ALLOW",
+          "GuestAllowList": "DISALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
+          "s3PermissionsGuestPublic": "DISALLOW",
+          "s3PermissionsGuestUploads": "DISALLOW",
           "env": "dev"
         }
       }

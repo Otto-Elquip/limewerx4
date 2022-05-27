@@ -3,13 +3,6 @@ import Link from "next/link";
 import { AnimatePresence, motion, useCycle } from "framer-motion";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
-const links = [
-  { name: "HOME", to: "#Home", id: 1 },
-  { name: "myProfile", to: "/myProfile", id: 2 },
-  { name: "myVehicles", to: "/myVehicles", id: 3 },
-  { name: "CONTACT", to: "#Contact", id: 4 },
-];
-
 const itemVariants = {
   closed: {
     opacity: 0,
@@ -32,8 +25,26 @@ const sideVariants = {
   },
 };
 
-export default function Nav() {
+export default function Nav(authenticated) {
   const [open, cycleOpen] = useCycle(false, true);
+
+  if(authenticated.authenticated == true)
+  {
+    var links = [
+        { name: "Home", to: "#Home", id: 1 },
+        { name: "myProfile", to: "/myProfile", id: 2 },
+        { name: "myVehicles", to: "/myVehicles", id: 3 },
+        { name: "CONTACT", to: "#Contact", id: 4 },
+      ];
+  }
+  else
+  {
+    var links = [
+        { name: "HOME", to: "#Home", id: 1 },
+        { name: "Sign In", to: "/myProfile", id: 2 }
+      ];
+  }
+
 
   return (
     <nav className="flex justify-between w-full font-sans bg-gray-100 ">

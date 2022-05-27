@@ -1,6 +1,6 @@
 {
   "Resources": {
-    "DeviceAlertsauth0FunctionDeviceAlertsauth0FunctionAppSyncFunctionCF572565": {
+    "AccountDevicesauth0FunctionAccountDevicesauth0FunctionAppSyncFunction598FC950": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
         "ApiId": {
@@ -10,7 +10,7 @@
           "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
         },
         "FunctionVersion": "2018-05-29",
-        "Name": "DeviceAlertsauth0Function",
+        "Name": "AccountDevicesauth0Function",
         "RequestMappingTemplateS3Location": {
           "Fn::Join": [
             "",
@@ -23,11 +23,120 @@
               {
                 "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
               },
-              "/resolvers/Device.Alerts.auth.1.req.vtl"
+              "/resolvers/Account.Devices.auth.1.req.vtl"
             ]
           ]
         },
         "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "AccountDevicesDataResolverFnAccountDevicesDataResolverFnAppSyncFunctionCF50C02A": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackDeviceNestedStackDeviceNestedStackResourceDDEE1B36OutputstransformerrootstackDeviceDeviceDataSource057337C2Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "AccountDevicesDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Account.Devices.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Account.Devices.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      }
+    },
+    "AccountDevicesResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "Devices",
+        "TypeName": "Account",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "AccountDevicesauth0FunctionAccountDevicesauth0FunctionAppSyncFunction598FC950",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "AccountDevicesDataResolverFnAccountDevicesDataResolverFnAppSyncFunctionCF50C02A",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Account\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"Devices\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "referencetotransformerrootstackDeviceNestedStackDeviceNestedStackResourceDDEE1B36OutputstransformerrootstackDeviceDeviceTable59D6F21BRef"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
     "DeviceAlertsDataResolverFnDeviceAlertsDataResolverFnAppSyncFunctionCE77BB0D": {
@@ -92,7 +201,7 @@
           "Functions": [
             {
               "Fn::GetAtt": [
-                "DeviceAlertsauth0FunctionDeviceAlertsauth0FunctionAppSyncFunctionCF572565",
+                "AccountDevicesauth0FunctionAccountDevicesauth0FunctionAppSyncFunction598FC950",
                 "FunctionId"
               ]
             },
@@ -153,16 +262,22 @@
     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
       "Type": "String"
     },
-    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertAlertDataSourceEA31FCB0Name": {
+    "referencetotransformerrootstackDeviceNestedStackDeviceNestedStackResourceDDEE1B36OutputstransformerrootstackDeviceDeviceDataSource057337C2Name": {
       "Type": "String"
     },
-    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertAlertTable6B4C3552Ref": {
+    "referencetotransformerrootstackDeviceNestedStackDeviceNestedStackResourceDDEE1B36OutputstransformerrootstackDeviceDeviceTable59D6F21BRef": {
       "Type": "String"
     },
     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
       "Type": "String"
     },
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertAlertDataSourceEA31FCB0Name": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertAlertTable6B4C3552Ref": {
       "Type": "String"
     }
   }

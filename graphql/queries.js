@@ -13,6 +13,27 @@ export const getPost = /* GraphQL */ `
     }
   }
 `;
+
+export const listAccounts = /* GraphQL */ `
+  query ListAccounts(
+    $filter: ModelAccountFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAccounts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        CognitoUserName
+        AccountName
+        EmailAddr
+        AuthLvl
+        BusinessName
+      }
+      nextToken
+    }
+  }
+`;
+
 export const listCards = /* GraphQL */ `
   query ListCards(
     $filter: ModelCardFilterInput
@@ -27,8 +48,21 @@ export const listCards = /* GraphQL */ `
         period
         signal
         isDisplayed
+        _version
       }
       nextToken
+    }
+  }
+`;
+export const getCard = /* GraphQL */ `
+  query GetCard($id: ID!) {
+    getCard(id: $id) {
+      id
+      type
+      title
+      period
+      signal
+      isDisplayed
     }
   }
 `;
@@ -48,6 +82,7 @@ export const listCharts = /* GraphQL */ `
         signal
         filter
         isDisplayed
+        _version
       }
       nextToken
     }
@@ -123,6 +158,7 @@ export const listAlerts = /* GraphQL */ `
         period
         isDisplayed
         id
+        _version
         createdAt
       }
       nextToken
@@ -158,7 +194,7 @@ export const listDevices = /* GraphQL */ `
         Location
         Vehicle
         isAcive
-        PostID
+        accountID
         DateActivated
         createdAt
         updatedAt

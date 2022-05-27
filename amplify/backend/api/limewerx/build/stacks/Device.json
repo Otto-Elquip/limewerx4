@@ -111,6 +111,10 @@
           {
             "AttributeName": "id",
             "AttributeType": "S"
+          },
+          {
+            "AttributeName": "accountID",
+            "AttributeType": "S"
           }
         ],
         "BillingMode": {
@@ -122,6 +126,36 @@
             }
           ]
         },
+        "GlobalSecondaryIndexes": [
+          {
+            "IndexName": "byAccount",
+            "KeySchema": [
+              {
+                "AttributeName": "accountID",
+                "KeyType": "HASH"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+              "Fn::If": [
+                "ShouldUsePayPerRequestBilling",
+                {
+                  "Ref": "AWS::NoValue"
+                },
+                {
+                  "ReadCapacityUnits": {
+                    "Ref": "DynamoDBModelTableReadIOPS"
+                  },
+                  "WriteCapacityUnits": {
+                    "Ref": "DynamoDBModelTableWriteIOPS"
+                  }
+                }
+              ]
+            }
+          }
+        ],
         "PointInTimeRecoverySpecification": {
           "Fn::If": [
             "ShouldUsePointInTimeRecovery",
@@ -244,7 +278,18 @@
                   ]
                 },
                 {
-                  "Ref": "AWS::NoValue"
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "DeviceTable",
+                          "Arn"
+                        ]
+                      },
+                      "/index/*"
+                    ]
+                  ]
                 }
               ]
             }
@@ -787,6 +832,42 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
+    "QuerysyncDevicespreAuth0FunctionQuerysyncDevicespreAuth0FunctionAppSyncFunctionBDF521C7": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "DeviceDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerysyncDevicespreAuth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.syncDevices.preAuth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      },
+      "DependsOn": [
+        "DeviceDataSource"
+      ]
+    },
     "QuerysyncDevicesauth0FunctionQuerysyncDevicesauth0FunctionAppSyncFunction6261E4EB": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -913,6 +994,12 @@
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
+            {
+              "Fn::GetAtt": [
+                "QuerysyncDevicespreAuth0FunctionQuerysyncDevicespreAuth0FunctionAppSyncFunctionBDF521C7",
+                "FunctionId"
+              ]
+            },
             {
               "Fn::GetAtt": [
                 "QuerysyncDevicesauth0FunctionQuerysyncDevicesauth0FunctionAppSyncFunction6261E4EB",
@@ -2189,6 +2276,19 @@
             ]
           ]
         }
+      }
+    },
+    "transformerrootstackDeviceDeviceDataSource057337C2Name": {
+      "Value": {
+        "Fn::GetAtt": [
+          "DeviceDataSource",
+          "Name"
+        ]
+      }
+    },
+    "transformerrootstackDeviceDeviceTable59D6F21BRef": {
+      "Value": {
+        "Ref": "DeviceTable"
       }
     }
   }

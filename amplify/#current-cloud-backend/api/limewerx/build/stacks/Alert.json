@@ -43,19 +43,37 @@
     "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-      "Type": "String"
-    },
     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
       "Type": "String"
     },
     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
       "Type": "String"
     },
+    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId": {
+      "Type": "String"
+    },
     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
       "Type": "String"
     },
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId": {
       "Type": "String"
     }
   },
@@ -470,66 +488,6 @@
         "AlertIAMRole6A09527E"
       ]
     },
-    "QuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction3415E0F3": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerygetAlertauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.getAlert.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerygetAlertpostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.getAlert.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
     "QueryGetAlertDataResolverFnQueryGetAlertDataResolverFnAppSyncFunction45BA3B88": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -597,16 +555,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction3415E0F3",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -718,16 +670,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction3415E0F3",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -881,16 +827,10 @@
               ]
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction3415E0F3",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountauth0FunctionQuerygetAccountauth0FunctionAppSyncFunction2C58F5C2FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -933,66 +873,6 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "MutationcreateAlertinit0FunctionMutationcreateAlertinit0FunctionAppSyncFunction91ACA9BC": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationcreateAlertinit0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.createAlert.init.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "MutationcreateAlertauth0FunctionMutationcreateAlertauth0FunctionAppSyncFunction94FC03D4": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationcreateAlertauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.createAlert.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "MutationCreateAlertDataResolverFnMutationCreateAlertDataResolverFnAppSyncFunctionE9446C1F": {
@@ -1062,22 +942,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "MutationcreateAlertinit0FunctionMutationcreateAlertinit0FunctionAppSyncFunction91ACA9BC",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountinit0FunctionMutationcreateAccountinit0FunctionAppSyncFunction3CBB6B59FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "MutationcreateAlertauth0FunctionMutationcreateAlertauth0FunctionAppSyncFunction94FC03D4",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationcreateAccountauth0FunctionMutationcreateAccountauth0FunctionAppSyncFunctionB6CBC9F2FunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1120,36 +991,6 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "MutationupdateAlertinit0FunctionMutationupdateAlertinit0FunctionAppSyncFunction8E0417C7": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationupdateAlertinit0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.updateAlert.init.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "MutationupdateAlertauth0FunctionMutationupdateAlertauth0FunctionAppSyncFunction57010AAD": {
@@ -1270,10 +1111,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "MutationupdateAlertinit0FunctionMutationupdateAlertinit0FunctionAppSyncFunction8E0417C7",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountMutationupdateAccountinit0FunctionMutationupdateAccountinit0FunctionAppSyncFunction0C79325CFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1282,10 +1120,7 @@
               ]
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1454,10 +1289,7 @@
               ]
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1502,81 +1334,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunction1E6DBD71": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononCreateAlertauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateAlert.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction0A84ACA9": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptionOnCreateAlertDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateAlert.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateAlert.res.vtl"
-            ]
-          ]
-        }
-      }
-    },
     "SubscriptiononCreateAlertResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
@@ -1589,22 +1346,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunction1E6DBD71",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction0A84ACA9",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId"
             }
           ]
         },
@@ -1651,22 +1399,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunction1E6DBD71",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction0A84ACA9",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId"
             }
           ]
         },
@@ -1713,22 +1452,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunction1E6DBD71",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptiononCreateAccountauth0FunctionSubscriptiononCreateAccountauth0FunctionAppSyncFunction6F128C3FFunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountQuerygetAccountpostAuth0FunctionQuerygetAccountpostAuth0FunctionAppSyncFunction16B6565EFunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction0A84ACA9",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackAccountNestedStackAccountNestedStackResource2C670FE9OutputstransformerrootstackAccountSubscriptionOnCreateAccountDataResolverFnSubscriptionOnCreateAccountDataResolverFnAppSyncFunction93E26020FunctionId"
             }
           ]
         },
@@ -1826,62 +1556,6 @@
             ]
           ]
         }
-      }
-    },
-    "transformerrootstackAlertQuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction6FA80CD0FunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "QuerygetAlertauth0FunctionQuerygetAlertauth0FunctionAppSyncFunction3415E0F3",
-          "FunctionId"
-        ]
-      }
-    },
-    "transformerrootstackAlertQuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunction45C53133FunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "QuerygetAlertpostAuth0FunctionQuerygetAlertpostAuth0FunctionAppSyncFunctionCD19D91A",
-          "FunctionId"
-        ]
-      }
-    },
-    "transformerrootstackAlertMutationcreateAlertinit0FunctionMutationcreateAlertinit0FunctionAppSyncFunction64025852FunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "MutationcreateAlertinit0FunctionMutationcreateAlertinit0FunctionAppSyncFunction91ACA9BC",
-          "FunctionId"
-        ]
-      }
-    },
-    "transformerrootstackAlertMutationcreateAlertauth0FunctionMutationcreateAlertauth0FunctionAppSyncFunction4C4A5CA9FunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "MutationcreateAlertauth0FunctionMutationcreateAlertauth0FunctionAppSyncFunction94FC03D4",
-          "FunctionId"
-        ]
-      }
-    },
-    "transformerrootstackAlertMutationupdateAlertinit0FunctionMutationupdateAlertinit0FunctionAppSyncFunction6F227BBAFunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "MutationupdateAlertinit0FunctionMutationupdateAlertinit0FunctionAppSyncFunction8E0417C7",
-          "FunctionId"
-        ]
-      }
-    },
-    "transformerrootstackAlertSubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunctionEA672576FunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "SubscriptiononCreateAlertauth0FunctionSubscriptiononCreateAlertauth0FunctionAppSyncFunction1E6DBD71",
-          "FunctionId"
-        ]
-      }
-    },
-    "transformerrootstackAlertSubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction149737B9FunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "SubscriptionOnCreateAlertDataResolverFnSubscriptionOnCreateAlertDataResolverFnAppSyncFunction0A84ACA9",
-          "FunctionId"
-        ]
       }
     },
     "transformerrootstackAlertAlertDataSourceEA31FCB0Name": {

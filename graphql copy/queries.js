@@ -27,8 +27,21 @@ export const listCards = /* GraphQL */ `
         period
         signal
         isDisplayed
+        _version
       }
       nextToken
+    }
+  }
+`;
+export const getCard = /* GraphQL */ `
+  query GetCard($id: ID!) {
+    getCard(id: $id) {
+      id
+      type
+      title
+      period
+      signal
+      isDisplayed
     }
   }
 `;
@@ -48,6 +61,7 @@ export const listCharts = /* GraphQL */ `
         signal
         filter
         isDisplayed
+        _version
       }
       nextToken
     }
@@ -104,6 +118,33 @@ export const listCanData = /* GraphQL */ `
     }
   }
 `;
+
+
+export const listAlerts = /* GraphQL */ `
+  query ListAlerts(
+    $filter: ModelAlertFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAlerts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        signal
+        deviceID
+        threshold
+        title
+        type
+        condition
+        period
+        isDisplayed
+        id
+        _version
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
+
 export const getDevice = /* GraphQL */ `
   query GetDevice($id: ID!) {
     getDevice(id: $id) {

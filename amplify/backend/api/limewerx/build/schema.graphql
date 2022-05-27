@@ -1,4 +1,19 @@
 
+type Account @aws_iam @aws_api_key {
+  id: ID!
+  CognitoUserName: String!
+  AccountName: String!
+  EmailAddr: String!
+  AuthLvl: Int!
+  BusinessName: String
+  Devices(filter: ModelDeviceFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDeviceConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
 type Alert @aws_iam @aws_api_key {
   id: ID!
   type: String!
@@ -32,7 +47,7 @@ type Chart @aws_iam @aws_api_key {
   _lastChangedAt: AWSTimestamp!
 }
 
-type Card @aws_iam @aws_api_key {
+type Card @aws_iam @aws_cognito_user_pools @aws_api_key {
   id: ID!
   CSSId: String!
   type: String!
@@ -77,9 +92,9 @@ type Device @aws_iam @aws_api_key {
   Location: String
   Vehicle: String
   isAcive: Boolean!
-  PostID: String!
   DateActivated: String!
   Alerts(filter: ModelAlertFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelAlertConnection
+  accountID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -178,6 +193,132 @@ enum ModelSortDirection {
   DESC
 }
 
+type ModelAccountConnection @aws_api_key @aws_iam {
+  items: [Account]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelAccountFilterInput {
+  id: ModelIDInput
+  CognitoUserName: ModelStringInput
+  AccountName: ModelStringInput
+  EmailAddr: ModelStringInput
+  AuthLvl: ModelIntInput
+  BusinessName: ModelStringInput
+  and: [ModelAccountFilterInput]
+  or: [ModelAccountFilterInput]
+  not: ModelAccountFilterInput
+}
+
+type Query {
+  getAccount(id: ID!): Account @aws_api_key @aws_iam
+  listAccounts(filter: ModelAccountFilterInput, limit: Int, nextToken: String): ModelAccountConnection @aws_api_key @aws_iam
+  syncAccounts(filter: ModelAccountFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelAccountConnection @aws_api_key @aws_iam
+  getAlert(id: ID!): Alert @aws_api_key @aws_iam
+  listAlerts(filter: ModelAlertFilterInput, limit: Int, nextToken: String): ModelAlertConnection @aws_api_key @aws_iam
+  syncAlerts(filter: ModelAlertFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelAlertConnection @aws_api_key @aws_iam
+  getChart(id: ID!): Chart @aws_api_key @aws_iam
+  listCharts(filter: ModelChartFilterInput, limit: Int, nextToken: String): ModelChartConnection @aws_api_key @aws_iam
+  syncCharts(filter: ModelChartFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelChartConnection @aws_api_key @aws_iam
+  getCard(id: ID!): Card @aws_api_key @aws_iam @aws_cognito_user_pools
+  listCards(filter: ModelCardFilterInput, limit: Int, nextToken: String): ModelCardConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  syncCards(filter: ModelCardFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCardConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getPost(id: ID!): Post @aws_api_key @aws_iam
+  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection @aws_api_key @aws_iam
+  syncPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPostConnection @aws_api_key @aws_iam
+  getCanData(id: ID!): CanData @aws_api_key @aws_iam
+  listCanData(filter: ModelCanDataFilterInput, limit: Int, nextToken: String): ModelCanDataConnection @aws_api_key @aws_iam
+  syncCanData(filter: ModelCanDataFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCanDataConnection @aws_api_key @aws_iam
+  getDevice(id: ID!): Device @aws_api_key @aws_iam
+  listDevices(filter: ModelDeviceFilterInput, limit: Int, nextToken: String): ModelDeviceConnection @aws_api_key @aws_iam
+  syncDevices(filter: ModelDeviceFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelDeviceConnection @aws_api_key @aws_iam
+}
+
+input ModelAccountConditionInput {
+  CognitoUserName: ModelStringInput
+  AccountName: ModelStringInput
+  EmailAddr: ModelStringInput
+  AuthLvl: ModelIntInput
+  BusinessName: ModelStringInput
+  and: [ModelAccountConditionInput]
+  or: [ModelAccountConditionInput]
+  not: ModelAccountConditionInput
+}
+
+input CreateAccountInput {
+  id: ID
+  CognitoUserName: String!
+  AccountName: String!
+  EmailAddr: String!
+  AuthLvl: Int!
+  BusinessName: String
+  _version: Int
+}
+
+input UpdateAccountInput {
+  id: ID!
+  CognitoUserName: String
+  AccountName: String
+  EmailAddr: String
+  AuthLvl: Int
+  BusinessName: String
+  _version: Int
+}
+
+input DeleteAccountInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createAccount(input: CreateAccountInput!, condition: ModelAccountConditionInput): Account @aws_api_key @aws_iam
+  updateAccount(input: UpdateAccountInput!, condition: ModelAccountConditionInput): Account @aws_api_key @aws_iam
+  deleteAccount(input: DeleteAccountInput!, condition: ModelAccountConditionInput): Account @aws_api_key @aws_iam
+  createAlert(input: CreateAlertInput!, condition: ModelAlertConditionInput): Alert @aws_api_key @aws_iam
+  updateAlert(input: UpdateAlertInput!, condition: ModelAlertConditionInput): Alert @aws_api_key @aws_iam
+  deleteAlert(input: DeleteAlertInput!, condition: ModelAlertConditionInput): Alert @aws_api_key @aws_iam
+  createChart(input: CreateChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
+  updateChart(input: UpdateChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
+  deleteChart(input: DeleteChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
+  createCard(input: CreateCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam @aws_cognito_user_pools
+  updateCard(input: UpdateCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam @aws_cognito_user_pools
+  deleteCard(input: DeleteCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam @aws_cognito_user_pools
+  createPost(input: CreatePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  updatePost(input: UpdatePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  deletePost(input: DeletePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
+  createCanData(input: CreateCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
+  updateCanData(input: UpdateCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
+  deleteCanData(input: DeleteCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
+  createDevice(input: CreateDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
+  updateDevice(input: UpdateDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
+  deleteDevice(input: DeleteDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
+}
+
+type Subscription {
+  onCreateAccount: Account @aws_subscribe(mutations: ["createAccount"]) @aws_api_key @aws_iam
+  onUpdateAccount: Account @aws_subscribe(mutations: ["updateAccount"]) @aws_api_key @aws_iam
+  onDeleteAccount: Account @aws_subscribe(mutations: ["deleteAccount"]) @aws_api_key @aws_iam
+  onCreateAlert: Alert @aws_subscribe(mutations: ["createAlert"]) @aws_api_key @aws_iam
+  onUpdateAlert: Alert @aws_subscribe(mutations: ["updateAlert"]) @aws_api_key @aws_iam
+  onDeleteAlert: Alert @aws_subscribe(mutations: ["deleteAlert"]) @aws_api_key @aws_iam
+  onCreateChart: Chart @aws_subscribe(mutations: ["createChart"]) @aws_api_key @aws_iam
+  onUpdateChart: Chart @aws_subscribe(mutations: ["updateChart"]) @aws_api_key @aws_iam
+  onDeleteChart: Chart @aws_subscribe(mutations: ["deleteChart"]) @aws_api_key @aws_iam
+  onCreateCard: Card @aws_subscribe(mutations: ["createCard"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateCard: Card @aws_subscribe(mutations: ["updateCard"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteCard: Card @aws_subscribe(mutations: ["deleteCard"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreatePost: Post @aws_subscribe(mutations: ["createPost"]) @aws_api_key @aws_iam
+  onUpdatePost: Post @aws_subscribe(mutations: ["updatePost"]) @aws_api_key @aws_iam
+  onDeletePost: Post @aws_subscribe(mutations: ["deletePost"]) @aws_api_key @aws_iam
+  onCreateCanData: CanData @aws_subscribe(mutations: ["createCanData"]) @aws_api_key @aws_iam
+  onUpdateCanData: CanData @aws_subscribe(mutations: ["updateCanData"]) @aws_api_key @aws_iam
+  onDeleteCanData: CanData @aws_subscribe(mutations: ["deleteCanData"]) @aws_api_key @aws_iam
+  onCreateDevice: Device @aws_subscribe(mutations: ["createDevice"]) @aws_api_key @aws_iam
+  onUpdateDevice: Device @aws_subscribe(mutations: ["updateDevice"]) @aws_api_key @aws_iam
+  onDeleteDevice: Device @aws_subscribe(mutations: ["deleteDevice"]) @aws_api_key @aws_iam
+}
+
 type ModelAlertConnection @aws_api_key @aws_iam {
   items: [Alert]!
   nextToken: String
@@ -197,27 +338,6 @@ input ModelAlertFilterInput {
   and: [ModelAlertFilterInput]
   or: [ModelAlertFilterInput]
   not: ModelAlertFilterInput
-}
-
-type Query {
-  getAlert(id: ID!): Alert @aws_api_key @aws_iam
-  listAlerts(filter: ModelAlertFilterInput, limit: Int, nextToken: String): ModelAlertConnection @aws_api_key @aws_iam
-  syncAlerts(filter: ModelAlertFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelAlertConnection @aws_api_key @aws_iam
-  getChart(id: ID!): Chart @aws_api_key @aws_iam
-  listCharts(filter: ModelChartFilterInput, limit: Int, nextToken: String): ModelChartConnection @aws_api_key @aws_iam
-  syncCharts(filter: ModelChartFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelChartConnection @aws_api_key @aws_iam
-  getCard(id: ID!): Card @aws_api_key @aws_iam
-  listCards(filter: ModelCardFilterInput, limit: Int, nextToken: String): ModelCardConnection @aws_api_key @aws_iam
-  syncCards(filter: ModelCardFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCardConnection @aws_api_key @aws_iam
-  getPost(id: ID!): Post @aws_api_key @aws_iam
-  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection @aws_api_key @aws_iam
-  syncPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPostConnection @aws_api_key @aws_iam
-  getCanData(id: ID!): CanData @aws_api_key @aws_iam
-  listCanData(filter: ModelCanDataFilterInput, limit: Int, nextToken: String): ModelCanDataConnection @aws_api_key @aws_iam
-  syncCanData(filter: ModelCanDataFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCanDataConnection @aws_api_key @aws_iam
-  getDevice(id: ID!): Device @aws_api_key @aws_iam
-  listDevices(filter: ModelDeviceFilterInput, limit: Int, nextToken: String): ModelDeviceConnection @aws_api_key @aws_iam
-  syncDevices(filter: ModelDeviceFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelDeviceConnection @aws_api_key @aws_iam
 }
 
 input ModelAlertConditionInput {
@@ -263,48 +383,6 @@ input UpdateAlertInput {
 input DeleteAlertInput {
   id: ID!
   _version: Int
-}
-
-type Mutation {
-  createAlert(input: CreateAlertInput!, condition: ModelAlertConditionInput): Alert @aws_api_key @aws_iam
-  updateAlert(input: UpdateAlertInput!, condition: ModelAlertConditionInput): Alert @aws_api_key @aws_iam
-  deleteAlert(input: DeleteAlertInput!, condition: ModelAlertConditionInput): Alert @aws_api_key @aws_iam
-  createChart(input: CreateChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
-  updateChart(input: UpdateChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
-  deleteChart(input: DeleteChartInput!, condition: ModelChartConditionInput): Chart @aws_api_key @aws_iam
-  createCard(input: CreateCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam
-  updateCard(input: UpdateCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam
-  deleteCard(input: DeleteCardInput!, condition: ModelCardConditionInput): Card @aws_api_key @aws_iam
-  createPost(input: CreatePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
-  updatePost(input: UpdatePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
-  deletePost(input: DeletePostInput!, condition: ModelPostConditionInput): Post @aws_api_key @aws_iam
-  createCanData(input: CreateCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
-  updateCanData(input: UpdateCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
-  deleteCanData(input: DeleteCanDataInput!, condition: ModelCanDataConditionInput): CanData @aws_api_key @aws_iam
-  createDevice(input: CreateDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
-  updateDevice(input: UpdateDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
-  deleteDevice(input: DeleteDeviceInput!, condition: ModelDeviceConditionInput): Device @aws_api_key @aws_iam
-}
-
-type Subscription {
-  onCreateAlert: Alert @aws_subscribe(mutations: ["createAlert"]) @aws_api_key @aws_iam
-  onUpdateAlert: Alert @aws_subscribe(mutations: ["updateAlert"]) @aws_api_key @aws_iam
-  onDeleteAlert: Alert @aws_subscribe(mutations: ["deleteAlert"]) @aws_api_key @aws_iam
-  onCreateChart: Chart @aws_subscribe(mutations: ["createChart"]) @aws_api_key @aws_iam
-  onUpdateChart: Chart @aws_subscribe(mutations: ["updateChart"]) @aws_api_key @aws_iam
-  onDeleteChart: Chart @aws_subscribe(mutations: ["deleteChart"]) @aws_api_key @aws_iam
-  onCreateCard: Card @aws_subscribe(mutations: ["createCard"]) @aws_api_key @aws_iam
-  onUpdateCard: Card @aws_subscribe(mutations: ["updateCard"]) @aws_api_key @aws_iam
-  onDeleteCard: Card @aws_subscribe(mutations: ["deleteCard"]) @aws_api_key @aws_iam
-  onCreatePost: Post @aws_subscribe(mutations: ["createPost"]) @aws_api_key @aws_iam
-  onUpdatePost: Post @aws_subscribe(mutations: ["updatePost"]) @aws_api_key @aws_iam
-  onDeletePost: Post @aws_subscribe(mutations: ["deletePost"]) @aws_api_key @aws_iam
-  onCreateCanData: CanData @aws_subscribe(mutations: ["createCanData"]) @aws_api_key @aws_iam
-  onUpdateCanData: CanData @aws_subscribe(mutations: ["updateCanData"]) @aws_api_key @aws_iam
-  onDeleteCanData: CanData @aws_subscribe(mutations: ["deleteCanData"]) @aws_api_key @aws_iam
-  onCreateDevice: Device @aws_subscribe(mutations: ["createDevice"]) @aws_api_key @aws_iam
-  onUpdateDevice: Device @aws_subscribe(mutations: ["updateDevice"]) @aws_api_key @aws_iam
-  onDeleteDevice: Device @aws_subscribe(mutations: ["deleteDevice"]) @aws_api_key @aws_iam
 }
 
 type ModelChartConnection @aws_api_key @aws_iam {
@@ -369,7 +447,7 @@ input DeleteChartInput {
   _version: Int
 }
 
-type ModelCardConnection @aws_api_key @aws_iam {
+type ModelCardConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
   items: [Card]!
   nextToken: String
   startedAt: AWSTimestamp
@@ -519,7 +597,7 @@ input DeleteCanDataInput {
   _version: Int
 }
 
-type ModelDeviceConnection @aws_api_key @aws_iam {
+type ModelDeviceConnection @aws_iam @aws_api_key {
   items: [Device]!
   nextToken: String
   startedAt: AWSTimestamp
@@ -531,8 +609,8 @@ input ModelDeviceFilterInput {
   Location: ModelStringInput
   Vehicle: ModelStringInput
   isAcive: ModelBooleanInput
-  PostID: ModelStringInput
   DateActivated: ModelStringInput
+  accountID: ModelIDInput
   and: [ModelDeviceFilterInput]
   or: [ModelDeviceFilterInput]
   not: ModelDeviceFilterInput
@@ -543,8 +621,8 @@ input ModelDeviceConditionInput {
   Location: ModelStringInput
   Vehicle: ModelStringInput
   isAcive: ModelBooleanInput
-  PostID: ModelStringInput
   DateActivated: ModelStringInput
+  accountID: ModelIDInput
   and: [ModelDeviceConditionInput]
   or: [ModelDeviceConditionInput]
   not: ModelDeviceConditionInput
@@ -556,8 +634,8 @@ input CreateDeviceInput {
   Location: String
   Vehicle: String
   isAcive: Boolean!
-  PostID: String!
   DateActivated: String!
+  accountID: ID!
   _version: Int
 }
 
@@ -567,8 +645,8 @@ input UpdateDeviceInput {
   Location: String
   Vehicle: String
   isAcive: Boolean
-  PostID: String
   DateActivated: String
+  accountID: ID
   _version: Int
 }
 

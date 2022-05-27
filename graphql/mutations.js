@@ -16,6 +16,77 @@ export const createCard = /* GraphQL */ `
     }
   }
 `;
+export const deleteCard = /* GraphQL */ `
+  mutation DeleteCard(
+    $input: DeleteCardInput!
+    $condition: ModelCardConditionInput
+  ) {
+    deleteCard(input: $input, condition: $condition) {
+      id
+    }
+  }
+`;
+
+export const updateCard = /* GraphQL */ `
+  mutation UpdateCard(
+    $input: UpdateCardInput!
+    $condition: ModelCardConditionInput
+  ) {
+    updateCard(input: $input, condition: $condition) {
+      id
+      CSSId
+      type
+      title
+      period
+      isDisplayed
+      signal
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const updateChart = /* GraphQL */ `
+  mutation UpdateChart(
+    $input: UpdateChartInput!
+    $condition: ModelChartConditionInput
+  ) {
+    updateChart(input: $input, condition: $condition) {
+      id
+      type
+      title
+      period
+      isDisplayed
+      signal
+      CSSId
+      filter
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+
+export const updateAlert = /* GraphQL */ `
+  mutation UpdateAlert(
+    $input: UpdateAlertInput!
+    $condition: ModelAlertConditionInput
+  ) {
+    updateAlert(input: $input, condition: $condition) {
+      id
+      type
+      title
+      period
+      isDisplayed
+      signal
+      condition
+      threshold
+      deviceID
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 export const createAlert = /* GraphQL */ `
   mutation CreateAlert(
@@ -32,6 +103,21 @@ export const createAlert = /* GraphQL */ `
       condition
       threshold
       deviceID
+    }
+  }
+`;
+
+export const createAccount = /* GraphQL */ `
+  mutation CreateAccount(
+    $input: CreateAccountInput!
+    $condition: ModelAccountConditionInput
+  ) {
+    createAccount(input: $input, condition: $condition) {
+      CognitoUserName
+      AccountName
+      EmailAddr
+      AuthLvl
+      BusinessName
     }
   }
 `;
@@ -156,8 +242,8 @@ export const createDevice = /* GraphQL */ `
       Location
       Vehicle
       isAcive
-      PostID
       DateActivated
+      accountID
       createdAt
       updatedAt
     }

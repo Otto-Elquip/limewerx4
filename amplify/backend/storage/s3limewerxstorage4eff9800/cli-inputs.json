@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3limewerxstorage4eff9800",
+  "bucketName": "limewerx-storage-4eff9800",
+  "policyUUID": "646575dd",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

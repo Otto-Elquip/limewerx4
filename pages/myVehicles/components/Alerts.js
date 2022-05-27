@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { API } from 'aws-amplify';
 import { listCanData, listDevices, listAlerts } from "../../../graphql/queries";
-import { createAlert } from "../../../graphql/mutations";
+import { createAlert, updateAlert } from "../../../graphql/mutations";
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -44,18 +44,26 @@ const Alerts = (deviceID) => {
         let filterStr2 = {CSSId: {eq: deviceID.deviceID}};
         const deviceId = await API.graphql({
             query: listDevices , variables: {filter: filterStr2}});
-        var dID = deviceId.data.listDevices.items[0].id;
+        if(dID = deviceId.data.listDevices.items.length>0)
+        {
+            var dID = deviceId.data.listDevices.items[0].id;
+        }
+        else
+        {
+            var dID = 0;
+        }
         setDevice(dID);
 
         let filterStr3 = {deviceID: {eq: dID}};
         const deviceAlerts = await API.graphql({
             query: listAlerts, variables: {filter: filterStr3}});
         
-        setAlertList(deviceAlerts.data.listAlerts.items)
+        var displayedAlerts = deviceAlerts.data.listAlerts.items.filter(x => x.isDisplayed == true)
+        setAlertList(displayedAlerts)
         setAlert(() => ({...alert, 'signal': '---Select a Signal---', 'type': '---Select a Filter---', 'period': '---Select a Period---', 'deviceID': dID, 'isDisplayed': true, 'condition': '---Select a Condition---', threshold: ''}));
         
         var alertList = [];
-        deviceAlerts.data.listAlerts.items.forEach(function(al){
+        displayedAlerts.forEach(function(al){
             var relevantSignals = signalList.data.listCanData.items.filter( x => x.Signal == al.signal)
             var values = {value: [], date: []};
             var allowableCardDiff = 0;
@@ -146,8 +154,7 @@ const Alerts = (deviceID) => {
             var isAlert = checkAlert(al.threshold, singleVal, al.condition)
             if(isAlert)
             {
-                var date1 = new Date();
-                var data = {deviceID: deviceID,  Alert: al.title, Signal: al.signal, PhysicalValue: singleVal, SetThreshold: al.threshold, alertCreatedAt: dateVal};
+                var data = {deviceID: deviceID,  Alert: al.title, Signal: al.signal, PhysicalValue: singleVal, SetThreshold: al.threshold, alertCreatedAt: dateVal, id: al.id, version: al._version};
                 alertList.push(data)
             }
         })
@@ -213,14 +220,25 @@ const Alerts = (deviceID) => {
         if(PostResult.data != undefined)
         {
             notify('Alert Successfully Added');
-            var alertReset = {signal: '---Select a Signal---', type: '---Select a Filter---', period: '---Select a Period---', deviceID: device, isDisplayed: true, condition: '---Select a Condition---', threshold: '', title: ""};
-            setAlert(alertReset);
         }
         else
         {
             notify('Error Adding Alert, Please Try Again');
         }
+        await getData(deviceID);
 
+    }
+
+    async function deleteAlertById(alertEl)
+    {
+        var alertId = alertEl.target.name.split("!")[0].toString();
+        var versionNum = alertEl.target.name.split("!")[1].toString();
+        const alertDetails = {id: alertId, isDisplayed: false, _version: versionNum};
+        await API.graphql({
+            query: updateAlert, 
+            variables: {input: alertDetails}});
+        await getData(deviceID);
+        notify('Alert Deleted');
     }
 
     const notify = (message) => {
@@ -250,7 +268,7 @@ const Alerts = (deviceID) => {
     const renderData = (data, index) => {
         return(
             <tr key={index}>
-                <td>{data.deviceID.deviceID}</td>
+                <td>{data.deviceID.deviceID} </td>
                 <td>{data.Signal}</td>
                 <td>{data.PhysicalValue}</td>
                 <td>{data.SetThreshold}</td>
@@ -261,7 +279,8 @@ const Alerts = (deviceID) => {
     const renderData2 = (data, index) => {
         return(
             <tr key={index}>
-                <td>{data.title}</td>
+                <td>{data.title}<button name={`${data.id}!${data._version}`} 
+                onClick={deleteAlertById}>🗑️</button></td>
                 <td>{data.type}</td>
                 <td>{data.signal}</td>
                 <td>{data.condition}</td>
@@ -269,7 +288,7 @@ const Alerts = (deviceID) => {
             </tr>
         )
     }
-    console.log(alertList)
+
     return (
         <>
             <div style={{paddingLeft: '15px', paddingRight: '15px'}}>

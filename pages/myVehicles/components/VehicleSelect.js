@@ -15,7 +15,6 @@ export default function Home({deviceList}){
     const data = await API.graphql({
       query: listCanData, variables: {filter: filterStr}});
       setCanData(data.data.listCanData.items);
-      console.log('in here')
   }
 
   let handleDeviceChange = (e) => {

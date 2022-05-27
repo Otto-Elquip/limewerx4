@@ -13,6 +13,9 @@ $util.qr($ctx.stash.put("hasAuth", true))
   #end
 $util.unauthorized()
 #end
+#if( $util.authType() == "User Pool Authorization" )
+  #set( $isAuthorized = true )
+#end
 #if( !$isAuthorized )
 $util.unauthorized()
 #end

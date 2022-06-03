@@ -34,6 +34,27 @@ export const listAccounts = /* GraphQL */ `
   }
 `;
 
+export const listUploadFiles = /* GraphQL */ `
+  query ListUploadFiles(
+    $filter: ModelUploadFileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUploadFiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        FileName
+        UploadedBy
+        deviceID
+        _version
+        isDeleted
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
+
 export const listCards = /* GraphQL */ `
   query ListCards(
     $filter: ModelCardFilterInput

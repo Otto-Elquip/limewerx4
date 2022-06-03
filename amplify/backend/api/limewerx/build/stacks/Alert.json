@@ -2277,19 +2277,6 @@
           ]
         }
       }
-    },
-    "transformerrootstackAlertAlertDataSourceEA31FCB0Name": {
-      "Value": {
-        "Fn::GetAtt": [
-          "AlertDataSource",
-          "Name"
-        ]
-      }
-    },
-    "transformerrootstackAlertAlertTable6B4C3552Ref": {
-      "Value": {
-        "Ref": "AlertTable"
-      }
     }
   }
 }

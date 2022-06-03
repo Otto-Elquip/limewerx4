@@ -176,7 +176,7 @@
           "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
         },
         "DataSourceName": {
-          "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertAlertDataSourceEA31FCB0Name"
+          "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileUploadFileDataSource0B25A30DName"
         },
         "FunctionVersion": "2018-05-29",
         "Name": "DeviceAlertsDataResolverFn",
@@ -253,7 +253,146 @@
               },
               "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
               {
-                "Ref": "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertAlertTable6B4C3552Ref"
+                "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileUploadFileTableC253AD2BRef"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "DeviceUploadFilesauth0FunctionDeviceUploadFilesauth0FunctionAppSyncFunction353FB7F6": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "DeviceUploadFilesauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Device.UploadFiles.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "DeviceUploadFilesDataResolverFnDeviceUploadFilesDataResolverFnAppSyncFunction8C6F8E75": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileUploadFileDataSource0B25A30DName"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "DeviceUploadFilesDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Device.UploadFiles.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Device.UploadFiles.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      }
+    },
+    "DeviceUploadFilesResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "UploadFiles",
+        "TypeName": "Device",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "DeviceUploadFilesauth0FunctionDeviceUploadFilesauth0FunctionAppSyncFunction353FB7F6",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "DeviceUploadFilesDataResolverFnDeviceUploadFilesDataResolverFnAppSyncFunction8C6F8E75",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Device\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"UploadFiles\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileUploadFileTableC253AD2BRef"
               },
               "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
               {
@@ -304,10 +443,10 @@
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
       "Type": "String"
     },
-    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertAlertDataSourceEA31FCB0Name": {
+    "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileUploadFileDataSource0B25A30DName": {
       "Type": "String"
     },
-    "referencetotransformerrootstackAlertNestedStackAlertNestedStackResource7D8488D8OutputstransformerrootstackAlertAlertTable6B4C3552Ref": {
+    "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileUploadFileTableC253AD2BRef": {
       "Type": "String"
     }
   }

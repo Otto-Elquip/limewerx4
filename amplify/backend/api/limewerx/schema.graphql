@@ -1,4 +1,12 @@
-type Account @model @auth(rules: [{allow: public}]) {
+type UploadFile @model @auth(rules: [{allow: public}, {allow: private}]) {
+  id: ID!
+  FileName: String
+  UploadedBy: String
+  deviceID: ID! @index(name: "byDevice")
+  isDeleted: Boolean
+}
+
+type Account @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   CognitoUserName: String!
   AccountName: String!
@@ -8,7 +16,7 @@ type Account @model @auth(rules: [{allow: public}]) {
   Devices: [Device] @hasMany(indexName: "byAccount", fields: ["id"])
 }
 
-type Alert @model @auth(rules: [{allow: public}]) {
+type Alert @model @auth(rules: [{allow: private}, {allow: public}]) {
   id: ID!
   type: String!
   title: String!
@@ -20,7 +28,7 @@ type Alert @model @auth(rules: [{allow: public}]) {
   deviceID: ID! @index(name: "byDevice")
 }
 
-type Chart @model @auth(rules: [{allow: public}]) {
+type Chart @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   type: String!
   title: String!
@@ -41,28 +49,29 @@ type Card @model @auth(rules: [{allow: public}, {allow: private}]) {
   signal: String
 }
 
-type Post @model @auth(rules: [{allow: public}]) {
+type Post @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   name: String!
   description: String
   devices: [String!]
 }
 
-type CanData @model @auth(rules: [{allow: public}]) {
+type CanData @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   deviceID: String!
   Signal: String!
   PhysicalValue: String!
 }
 
-type Device @model @auth(rules: [{allow: public}]) {
+type Device @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   CSSId: String!
   Location: String
   Vehicle: String
   isAcive: Boolean!
   DateActivated: String!
-  Alerts: [Alert] @hasMany(indexName: "byDevice", fields: ["id"])
+  Alerts: [UploadFile] @hasMany(indexName: "byDevice", fields: ["id"])
   accountID: ID! @index(name: "byAccount")
+  UploadFiles: [UploadFile] @hasMany(indexName: "byDevice", fields: ["id"])
 }
  

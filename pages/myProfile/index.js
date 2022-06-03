@@ -143,7 +143,7 @@ const initialState =
                    <h3 className="text-1xl  tracking-wide mt-6 mb-2">Account Name: {account.AccountName}</h3>
                    <h3 className="text-1xl  tracking-wide mt-6 mb-2">Business Name: {account.BusinessName}</h3>
                    <h3 className="text-1xl  tracking-wide mt-6 mb-2">Email: {account.EmailAddr}</h3> 
-                   <button onClick={signOut}> sign out</button>          
+                   <button onClick={signOut} style={{color: 'blue'}}> sign out</button>          
                 </>
               )}
             </div>

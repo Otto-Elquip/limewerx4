@@ -48,7 +48,6 @@ function RegisterDevice(AccountId, disp)
 
     async function createNewDevice()
     {
-        console.log(newDevice)
 
         if(!newDevice.CSSId || !newDevice.Vehicle) 
         {
@@ -120,7 +119,7 @@ function RegisterDevice(AccountId, disp)
                     <Col>
                     <button 
                         style={{color: 'blue', paddingLeft: '10px', paddingRight: '10px'}}  
-                        onClick={createNewDevice}> Create Device |  </button>
+                        onClick={createNewDevice}> Register Device |  </button>
                     <button 
                         style={{color: 'blue'}}  
                         onClick={Cancel}> Cancel  </button>

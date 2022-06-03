@@ -9,6 +9,7 @@ import RegisterDevice from "./components/RegisterDevice";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as ReactBootStrap from 'react-bootstrap';
 import BarChart from './components/BarChart';
+import MyFiles from './components/MyFiles';
 import { Card, Row, Col, Container }from 'react-bootstrap';
 import Link from 'next/link';
 import { CSVLink } from 'react-csv'
@@ -45,6 +46,7 @@ function Home({deviceList, deviceIDs, user}){
     const [newDevice, setNewDevice] = useState(false);
     const [accountID, setAccountID] = useState();
     const [authenticated, setAuthenticated] = useState();
+    const [currentUser, setCurrentUser] = useState(user);
 
     useEffect(() => {
         setAccountID(user.username);
@@ -58,7 +60,6 @@ function Home({deviceList, deviceIDs, user}){
       Promise.all([Auth.currentUserCredentials()])
       .then( result => {
         const [a] = result;
-        console.log(a.authenticated)
         if(a.authenticated == true)
         {
           setAuthenticated(true);
@@ -77,8 +78,6 @@ function Home({deviceList, deviceIDs, user}){
             variables: {filter: filterStr}
         })
         var userId = accountList.data.listAccounts.items[0].id
-        console.log('setting device list')
-        console.log(dl.filter(x => x.accountID ==userId))
         setDList(dl.filter(x => x.accountID ==userId));
     }
 
@@ -111,7 +110,6 @@ function Home({deviceList, deviceIDs, user}){
       async function fetchCanData() {
 
         let filterStr = {deviceID: {eq: deviceID}};
-        let filterStr2 = {CSSId: {eq: deviceID}};
         const data = await API.graphql({
             query: listCanData, variables: {filter: filterStr}});
             setCanData(data.data.listCanData.items);
@@ -128,10 +126,7 @@ function Home({deviceList, deviceIDs, user}){
         }
 
         setCSVData(csvReportContent);
-        const cards = await API.graphql({
-            query: listCards,
-            variables: {filter: filterStr2}
-        });
+
         let filterStr3 = {filter: {CSSId: {eq: deviceID}}};
         const chartList = await API.graphql({
         query: listCharts,
@@ -241,6 +236,11 @@ function Home({deviceList, deviceIDs, user}){
             gData.push(graphDataInstance);
         })
         setChartData(gData);
+        let filterStr2 = {CSSId: {eq: deviceID}};
+        const cards = await API.graphql({
+            query: listCards,
+            variables: {filter: filterStr2}
+        });
         var allowableCardDiff = 0;
         var cData = [];
         var displayedCards = cards.data.listCards.items.filter(x => x.isDisplayed == true)
@@ -363,7 +363,7 @@ function Home({deviceList, deviceIDs, user}){
             setNewDevice(false);
         }
     }
-    console.log(authenticated)
+
   return (
     <div>
         <Navbar2 authenticated={authenticated} />
@@ -495,7 +495,10 @@ function Home({deviceList, deviceIDs, user}){
                 </>
             )}
             {tab == 4 && (
-                <h3 className="text-1xl font-semibold tracking-wide mt-6 mb-2" style={{paddingTop: '10px', paddingLeft: '15px'}} >You currently do not have any files uploaded</h3>
+                <>
+                    <MyFiles deviceID={deviceID} userID={currentUser}/>
+                </>
+
             )}
         </div>
     </div>  

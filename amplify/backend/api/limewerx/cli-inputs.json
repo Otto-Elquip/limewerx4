@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "limewerx",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-7fcf5a38-8834-45f4-9995-0c9b5cb1d824/amplify/backend/api/limewerx/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-83c53205-859c-466b-90ef-debf6a18d89d/amplify/backend/api/limewerx/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",

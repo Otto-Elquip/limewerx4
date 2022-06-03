@@ -4,9 +4,10 @@ import { schema } from './schema';
 
 
 
-const { Account, Device, Alert, Chart, Card, Post, CanData } = initSchema(schema);
+const { UploadFile, Account, Device, Alert, Chart, Card, Post, CanData } = initSchema(schema);
 
 export {
+  UploadFile,
   Account,
   Device,
   Alert,

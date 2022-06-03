@@ -201,6 +201,19 @@ export const createCanData = /* GraphQL */ `
     }
   }
 `;
+export const createUploadFile = /* GraphQL */ `
+  mutation CreateUploadFile(
+    $input: CreateUploadFileInput!
+    $condition: ModelUploadFileConditionInput
+  ) {
+    createUploadFile(input: $input, condition: $condition) {
+      id
+      FileName
+      UploadedBy
+      deviceID
+    }
+  }
+`;
 export const updateCanData = /* GraphQL */ `
   mutation UpdateCanData(
     $input: UpdateCanDataInput!
@@ -249,6 +262,22 @@ export const createDevice = /* GraphQL */ `
     }
   }
 `;
+
+export const updateUploadFile = /* GraphQL */ `
+  mutation UpdateUploadFile(
+    $input: UpdateUploadFileInput!
+    $condition: ModelUploadFileConditionInput
+  ) {
+    updateUploadFile(input: $input, condition: $condition) {
+      id
+      FileName
+      UploadedBy
+      deviceID
+      isDeleted
+    }
+  }
+`;
+
 export const updateDevice = /* GraphQL */ `
   mutation UpdateDevice(
     $input: UpdateDeviceInput!

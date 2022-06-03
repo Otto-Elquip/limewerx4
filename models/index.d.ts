@@ -4,6 +4,10 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+type UploadFileMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type AccountMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -32,6 +36,18 @@ type CanDataMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+export declare class UploadFile {
+  readonly id: string;
+  readonly FileName?: string | null;
+  readonly UploadedBy?: string | null;
+  readonly deviceID: string;
+  readonly isDeleted?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<UploadFile, UploadFileMetaData>);
+  static copyOf(source: UploadFile, mutator: (draft: MutableModel<UploadFile, UploadFileMetaData>) => MutableModel<UploadFile, UploadFileMetaData> | void): UploadFile;
+}
+
 export declare class Account {
   readonly id: string;
   readonly CognitoUserName: string;
@@ -53,8 +69,9 @@ export declare class Device {
   readonly Vehicle?: string | null;
   readonly isAcive: boolean;
   readonly DateActivated: string;
-  readonly Alerts?: (Alert | null)[] | null;
+  readonly Alerts?: (UploadFile | null)[] | null;
   readonly accountID: string;
+  readonly UploadFiles?: (UploadFile | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Device, DeviceMetaData>);

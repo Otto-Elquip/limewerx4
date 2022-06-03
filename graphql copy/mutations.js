@@ -107,6 +107,21 @@ export const createAlert = /* GraphQL */ `
   }
 `;
 
+export const createAccount = /* GraphQL */ `
+  mutation CreateAccount(
+    $input: CreateAccountInput!
+    $condition: ModelAccountConditionInput
+  ) {
+    createAccount(input: $input, condition: $condition) {
+      CognitoUserName
+      AccountName
+      EmailAddr
+      AuthLvl
+      BusinessName
+    }
+  }
+`;
+
 
 export const createChart = /* GraphQL */ `
   mutation CreateChart(
@@ -227,8 +242,8 @@ export const createDevice = /* GraphQL */ `
       Location
       Vehicle
       isAcive
-      PostID
       DateActivated
+      accountID
       createdAt
       updatedAt
     }

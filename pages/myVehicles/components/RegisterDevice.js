@@ -68,6 +68,8 @@ function RegisterDevice(AccountId, disp)
         {
             notify('Error Registering Device, Please Try Again');
         }
+        setDisplay(false);
+        
     }
 
     function onChange(e){

@@ -31,16 +31,16 @@ export default function Nav(authenticated) {
   if(authenticated.authenticated == true)
   {
     var links = [
-        { name: "Home", to: "#Home", id: 1 },
+        { name: "Home", to: "./", id: 1 },
         { name: "myProfile", to: "/myProfile", id: 2 },
         { name: "myVehicles", to: "/myVehicles", id: 3 },
-        { name: "CONTACT", to: "#Contact", id: 4 },
+        { name: "CONTACT", to: "./", id: 4 },
       ];
   }
   else
   {
     var links = [
-        { name: "HOME", to: "#Home", id: 1 },
+        { name: "HOME", to: "./", id: 1 },
         { name: "Sign In", to: "/myProfile", id: 2 }
       ];
   }

@@ -18,11 +18,11 @@ const initialState =
 }
 
 
-function RegisterDevice(AccountId, disp)
+function RegisterDevice(AccountId)
 {
     const [newDevice, setNewDevice] = useState(initialState);
     const [display, setDisplay] = useState(AccountId.disp);
-    const [id, setId] = useState();
+    const [id, setId] = useState(AccountId.accountID);
 
     useEffect(() => {
         setInitParams(AccountId.AccountId);
@@ -118,7 +118,7 @@ function RegisterDevice(AccountId, disp)
                         className="border-b pb-2 text-lg my-4 focus:outline-none w-full font-light
                         text-gray-500 placeholder-gray-500 y-z">
                     </input>
-                    <Col>
+                    <Col key={id}>
                     <button 
                         style={{color: 'blue', paddingLeft: '10px', paddingRight: '10px'}}  
                         onClick={createNewDevice}> Register Device |  </button>

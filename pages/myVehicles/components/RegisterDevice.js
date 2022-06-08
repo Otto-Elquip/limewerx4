@@ -93,6 +93,7 @@ function RegisterDevice(AccountId)
                     <h3 className="text-3xl font-semibold tracking-wide mt-6 mb-2"> Register Device </h3>
                     <h6 className="text-1xl font=semibold tracking-wide mt-6"> CSS ID *</h6>
                     <input
+                        key={2}
                         onChange={onChange}
                         name="CSSId"
                         placeholder="CSS ID as it appears on the device sticker"
@@ -102,6 +103,7 @@ function RegisterDevice(AccountId)
                     </input>
                     <h6 className="text-1xl font=semibold tracking-wide mt-6"> Vehicle *</h6>
                     <input
+                        key={3}
                         onChange={onChange}
                         name="Vehicle"
                         placeholder="The name of the vehicle the CSS Box is installed on"
@@ -111,6 +113,7 @@ function RegisterDevice(AccountId)
                     </input>
                     <h6 className="text-1xl font=semibold tracking-wide mt-6"> Location *</h6>
                     <input
+                        key={4}
                         onChange={onChange}
                         name="Location"
                         placeholder="Location the vehicle is working at"

@@ -52,7 +52,7 @@
     "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFileauth0FunctionQuerygetUploadFileauth0FunctionAppSyncFunction51683BD2FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId": {
+    "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId": {
       "Type": "String"
     },
     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -61,19 +61,19 @@
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
       "Type": "String"
     },
-    "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileMutationcreateUploadFileinit0FunctionMutationcreateUploadFileinit0FunctionAppSyncFunctionB1154AB6FunctionId": {
+    "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataMutationcreateReferenceDatainit0FunctionMutationcreateReferenceDatainit0FunctionAppSyncFunctionAF414477FunctionId": {
       "Type": "String"
     },
     "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileMutationcreateUploadFileauth0FunctionMutationcreateUploadFileauth0FunctionAppSyncFunctionB8B37A3CFunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileMutationupdateUploadFileinit0FunctionMutationupdateUploadFileinit0FunctionAppSyncFunction0D279A79FunctionId": {
+    "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataMutationupdateReferenceDatainit0FunctionMutationupdateReferenceDatainit0FunctionAppSyncFunctionF0CCC3AAFunctionId": {
       "Type": "String"
     },
     "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileSubscriptiononCreateUploadFileauth0FunctionSubscriptiononCreateUploadFileauth0FunctionAppSyncFunction0451D5CEFunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileSubscriptionOnCreateUploadFileDataResolverFnSubscriptionOnCreateUploadFileDataResolverFnAppSyncFunction2D6D4904FunctionId": {
+    "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataSubscriptionOnCreateReferenceDataDataResolverFnSubscriptionOnCreateReferenceDataDataResolverFnAppSyncFuncAA1811E4": {
       "Type": "String"
     }
   },
@@ -513,7 +513,7 @@
               "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFileauth0FunctionQuerygetUploadFileauth0FunctionAppSyncFunction51683BD2FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -628,7 +628,7 @@
               "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFileauth0FunctionQuerygetUploadFileauth0FunctionAppSyncFunction51683BD2FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -743,7 +743,7 @@
               "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFileauth0FunctionQuerygetUploadFileauth0FunctionAppSyncFunction51683BD2FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -855,13 +855,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileMutationcreateUploadFileinit0FunctionMutationcreateUploadFileinit0FunctionAppSyncFunctionB1154AB6FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataMutationcreateReferenceDatainit0FunctionMutationcreateReferenceDatainit0FunctionAppSyncFunctionAF414477FunctionId"
             },
             {
               "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileMutationcreateUploadFileauth0FunctionMutationcreateUploadFileauth0FunctionAppSyncFunctionB8B37A3CFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1024,7 +1024,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileMutationupdateUploadFileinit0FunctionMutationupdateUploadFileinit0FunctionAppSyncFunction0D279A79FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataMutationupdateReferenceDatainit0FunctionMutationupdateReferenceDatainit0FunctionAppSyncFunctionF0CCC3AAFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1033,7 +1033,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1202,7 +1202,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1262,10 +1262,10 @@
               "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileSubscriptiononCreateUploadFileauth0FunctionSubscriptiononCreateUploadFileauth0FunctionAppSyncFunction0451D5CEFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileSubscriptionOnCreateUploadFileDataResolverFnSubscriptionOnCreateUploadFileDataResolverFnAppSyncFunction2D6D4904FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataSubscriptionOnCreateReferenceDataDataResolverFnSubscriptionOnCreateReferenceDataDataResolverFnAppSyncFuncAA1811E4"
             }
           ]
         },
@@ -1315,10 +1315,10 @@
               "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileSubscriptiononCreateUploadFileauth0FunctionSubscriptiononCreateUploadFileauth0FunctionAppSyncFunction0451D5CEFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileSubscriptionOnCreateUploadFileDataResolverFnSubscriptionOnCreateUploadFileDataResolverFnAppSyncFunction2D6D4904FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataSubscriptionOnCreateReferenceDataDataResolverFnSubscriptionOnCreateReferenceDataDataResolverFnAppSyncFuncAA1811E4"
             }
           ]
         },
@@ -1368,10 +1368,10 @@
               "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileSubscriptiononCreateUploadFileauth0FunctionSubscriptiononCreateUploadFileauth0FunctionAppSyncFunction0451D5CEFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileQuerygetUploadFilepostAuth0FunctionQuerygetUploadFilepostAuth0FunctionAppSyncFunctionD0B9ABE0FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataQuerygetReferenceDatapostAuth0FunctionQuerygetReferenceDatapostAuth0FunctionAppSyncFunctionBB523E27FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackUploadFileNestedStackUploadFileNestedStackResource75E0B91AOutputstransformerrootstackUploadFileSubscriptionOnCreateUploadFileDataResolverFnSubscriptionOnCreateUploadFileDataResolverFnAppSyncFunction2D6D4904FunctionId"
+              "Ref": "referencetotransformerrootstackReferenceDataNestedStackReferenceDataNestedStackResourceD9F0DD7COutputstransformerrootstackReferenceDataSubscriptionOnCreateReferenceDataDataResolverFnSubscriptionOnCreateReferenceDataDataResolverFnAppSyncFuncAA1811E4"
             }
           ]
         },

@@ -1,5 +1,64 @@
 export const schema = {
     "models": {
+        "ReferenceData": {
+            "name": "ReferenceData",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "AccountOwnerCd": {
+                    "name": "AccountOwnerCd",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "ReferenceData",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "UploadFile": {
             "name": "UploadFile",
             "fields": {
@@ -855,5 +914,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "e1ae5584a7065b5f6fc9b37c673ba6e7"
+    "version": "9df8a2dd5e86d71de5bdb0c68c4df592"
 };

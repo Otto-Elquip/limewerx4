@@ -4,6 +4,10 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+type ReferenceDataMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type UploadFileMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -34,6 +38,15 @@ type PostMetaData = {
 
 type CanDataMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+export declare class ReferenceData {
+  readonly id: string;
+  readonly AccountOwnerCd?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<ReferenceData, ReferenceDataMetaData>);
+  static copyOf(source: ReferenceData, mutator: (draft: MutableModel<ReferenceData, ReferenceDataMetaData>) => MutableModel<ReferenceData, ReferenceDataMetaData> | void): ReferenceData;
 }
 
 export declare class UploadFile {

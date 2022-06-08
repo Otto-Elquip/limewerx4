@@ -1,3 +1,8 @@
+type ReferenceData @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  AccountOwnerCd: String
+}
+
 type UploadFile @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   FileName: String

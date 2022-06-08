@@ -15,5 +15,5 @@
         "Ref": "UnauthRoleName"
     },
     "S3DeploymentBucket": "amplify-limewerx-dev-160310-deployment",
-    "S3DeploymentRootKey": "amplify-appsync-files/445cc00d22b255ffee754bb1679ac9f6f313df37"
+    "S3DeploymentRootKey": "amplify-appsync-files/b5691ce7d81e84f0d33ff369bb2fc0f95121c0a3"
 }

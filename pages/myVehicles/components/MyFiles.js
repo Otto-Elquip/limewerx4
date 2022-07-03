@@ -153,8 +153,8 @@ const MyFiles = (deviceID) => {
         await fetchFiles(device);
     }
     return(
-        <>
-            <input
+        <div>
+            <input key={501}
                 type='file'
                 ref={hiddenFileInput}
                 className='absolute w-0 h-0'
@@ -162,15 +162,15 @@ const MyFiles = (deviceID) => {
             
             </input>
 
-            <Container className="justify-content-left">
-                <Row> 
-                    <Col xs={1}>                
+            <Container key={101} className="justify-content-left">
+                <Row key={301}> 
+                    <Col key={11} xs={1}>                
                         <button style={{color: 'blue'}}
                             onClick={uploadFile}>
                             Add File
                         </button>
                     </Col>
-                    <Col xs={2}>
+                    <Col key={12} xs={2}>
                         {file != null &&(
                             <button style={{color: 'blue'}}
                                 onClick={createFile}>
@@ -179,8 +179,8 @@ const MyFiles = (deviceID) => {
                         )}
                     </Col>
                 </Row>
-                <Row>
-                    <Col xs={3}>
+                <Row key={302}>
+                    <Col key={13} xs={3}>
                         {file != null && (
                             file.name
                         )}
@@ -188,20 +188,20 @@ const MyFiles = (deviceID) => {
 
                 </Row>
                 <Row>
-                    <Col>
+                    <Col key={14}>
                         <h6 className="font-semibold">
                             File
                         </h6>
                     </Col>
-                    <Col xs={1}>
+                    <Col key={15}xs={1}>
                         
                     </Col>
-                    <Col>
+                    <Col key={16}>
                         <h6 className="font-semibold">
                             Uploaded By
                         </h6>
                     </Col>
-                    <Col>
+                    <Col key={17}>
                         <h6 className="font-semibold">
                             Upload Time
                         </h6>
@@ -210,11 +210,11 @@ const MyFiles = (deviceID) => {
                 </Row>
                 <hr style={{color: 'black', height: 2}} />
             </Container>
-            <Container>
+            <Container key={102}>
                 
                 {displayFiles.map((f, k) => (
                     <Row>
-                        <Col xs={3}>
+                        <Col key={1} xs={3}>
                             <button
                                 style={{color: 'blue' }}
                                 key={k}
@@ -223,15 +223,15 @@ const MyFiles = (deviceID) => {
                             {f.FileName}
                             </button>
                         </Col>
-                        <Col xs={1}>
+                        <Col key={2} xs={1}>
                             <button name={`${f.id}!${f._version}`}
                             className="justify-content-md-center"
                             onClick={deleteFileByID}>🗑️</button>
                         </Col>
-                        <Col>
+                        <Col key={3}>
                             {f.UploadedBy}
                         </Col>
-                        <Col>
+                        <Col key={4}>
                             {f.createdAt}
                         </Col>
 
@@ -254,7 +254,7 @@ const MyFiles = (deviceID) => {
                 />
                 {/* Same as */}
             <ToastContainer />
-        </>
+        </div>
     )
 }
 

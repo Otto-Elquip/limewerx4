@@ -1,7 +1,7 @@
 import { useState, useEffect, React} from "react";
 import { API } from 'aws-amplify';
 import { listDevices, listCanData, listAccounts} from '../../graphql/queries'
-import { ButtonGroup, withAuthenticator } from "@aws-amplify/ui-react";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 import Navbar2 from "../components/Navbar";
 import Alerts from "./components/Alerts";
 import RegisterDevice from "./components/RegisterDevice";
@@ -12,7 +12,6 @@ import * as ReactBootStrap from 'react-bootstrap';
 import MyFiles from './components/MyFiles';
 import { Row, Col, Container }from 'react-bootstrap';
 import { CSVLink } from 'react-csv'
-import ReactTooltip from "react-tooltip";
 import { Auth } from 'aws-amplify';
 
 
@@ -31,7 +30,7 @@ var initialCSVState = {
 };
 
 
-function Home({deviceList, deviceIDs, user}){
+function Home({deviceList}){
 
     const [tab, setTab] = useState(1);
     const [tabColours, setTabColours] = useState(['none', 'grey', 'grey', 'grey'])
@@ -44,10 +43,10 @@ function Home({deviceList, deviceIDs, user}){
     const [dispChart, setDispChart] = useState(false);
     const [accountID, setAccountID] = useState();
     const [authenticated, setAuthenticated] = useState();
-    const [currentUser, setCurrentUser] = useState(user);
+    const [currentUser, setCurrentUser] = useState(Auth.currentAuthenticatedUser());
 
     useEffect(() => {
-        setAccountID(user.username);
+        setAccountID(Auth.currentAuthenticatedUser());
         setDeviceList(deviceList);
         checkAuth();
     }, [])
@@ -58,6 +57,7 @@ function Home({deviceList, deviceIDs, user}){
       Promise.all([Auth.currentUserCredentials()])
       .then( result => {
         const [a] = result;
+        console.log()
         if(a.authenticated == true)
         {
           setAuthenticated(true);
@@ -70,6 +70,7 @@ function Home({deviceList, deviceIDs, user}){
     }
 
     async function setDeviceList(dl){
+        var user = Auth.currentAuthenticatedUser();
         let filterStr = {CognitoUserName: {eq: user.username}}
         const accountList = await API.graphql({
             query: listAccounts, 
@@ -204,12 +205,10 @@ function Home({deviceList, deviceIDs, user}){
                {"\n"}
            </h1>
             
-            <ButtonGroup>
-                <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: `${tabColours[0]}`}}  onClick={() => setTab(1)}> Raw Data </button>
-                <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[1]}} onClick={() => setTab(2)}> Dashboard </button>
-                <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[2]}} onClick={() => setTab(3)}> Alerts </button>
-                <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[3]}} onClick={() => setTab(4)}> My Files </button>
-            </ButtonGroup>
+            <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: `${tabColours[0]}`}}  onClick={() => setTab(1)}> Raw Data </button>
+            <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[1]}} onClick={() => setTab(2)}> Dashboard </button>
+            <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[2]}} onClick={() => setTab(3)}> Alerts </button>
+            <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[3]}} onClick={() => setTab(4)}> My Files </button>
             
             <hr style={{color: 'black', height: 5}} />
 

@@ -34,7 +34,7 @@ function Home({deviceList}){
 
     const [tab, setTab] = useState(1);
     const [tabColours, setTabColours] = useState(['none', 'grey', 'grey', 'grey'])
-    const [dList, setDList] = useState([]);
+    const [dList, setDList] = useState(deviceList);
     const [csvData, setCSVData] = useState(initialCSVState);
     const [deviceID, setDeviceID] = useState("");
     const [canData, setCanData] = useState([]);
@@ -43,10 +43,9 @@ function Home({deviceList}){
     const [dispChart, setDispChart] = useState(false);
     const [accountID, setAccountID] = useState();
     const [authenticated, setAuthenticated] = useState();
-    const [currentUser, setCurrentUser] = useState(Auth.currentAuthenticatedUser());
 
     useEffect(() => {
-        setAccountID(Auth.currentAuthenticatedUser());
+        
         setDeviceList(deviceList);
         checkAuth();
     }, [])
@@ -70,16 +69,19 @@ function Home({deviceList}){
     }
 
     async function setDeviceList(dl){
-        var user = Auth.currentAuthenticatedUser();
+        var user = await Auth.currentAuthenticatedUser();
+        console.log(user)
+        setAccountID(user);
         let filterStr = {CognitoUserName: {eq: user.username}}
         const accountList = await API.graphql({
             query: listAccounts, 
             variables: {filter: filterStr}
         })
         var userId = accountList.data.listAccounts.items[0].id
+        console.log(userId)
         setDList(dl.filter(x => x.accountID ==userId));
+        console.log(dl.filter(x => x.accountID ==userId))
     }
-
     useEffect(() => {
         fetchCanData();
       }, [deviceID]);
@@ -270,7 +272,7 @@ function Home({deviceList}){
             )}
             {tab == 4 && (
                 <>
-                    <MyFiles deviceID={deviceID} userID={currentUser}/>
+                    <MyFiles deviceID={deviceID} userID={accountID}/>
                 </>
 
             )}
@@ -286,8 +288,7 @@ export const getStaticProps = async () => {
     });
   
     const temp = devices.data.listDevices.items;
-    var deviceList = temp
-    
+    var deviceList = temp    
 
     return {
         props: {

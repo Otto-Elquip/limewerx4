@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import BarChart from './BarChart';
 
 const initialState = { title: '', type: '', period: '', CSSId: '', isDisplayed: false, filter: ''}
+const exampleState = {data: [24, 62, 55, 17, 30, 41, 59], label: ['Jun 10', 'Jun 11', 'Jun 12', 'Jun 13', 'Jun 14', 'Jun 15', 'Jun 16'], title: 'Chart Title', period: 'Chart Period', type: 'bar'};
 const SIGNAL_LIMIT = 5000;
 const Charts = (dID) => {
     const periodList = ['Last 24 Hours', 'Last Week', 'Last Month', 'Last Year'];
@@ -18,8 +19,8 @@ const Charts = (dID) => {
     const [chart, setChart] = useState(initialState);
     const [signals, setSignals] = useState([]);
     const [chartData, setChartData] = useState([]);
+    const [exampleChart, setExampleChart] = useState(exampleState);
 
-    console.log(dID)
 
     useEffect(() => {
         generateCharts();
@@ -71,6 +72,8 @@ const Charts = (dID) => {
 
     function onChange(e) {
         setChart(() => ({ ...chart, [e.target.name]: e.target.value}));
+        setExampleChart(() => ({ ...exampleChart, [e.target.name]: e.target.value}));
+
         if(e.target.name == 'period')
         {
             var filters = [];
@@ -101,6 +104,8 @@ const Charts = (dID) => {
         });
         notify("Chart Added");
         setDisplayChart(false);
+        setChart(initialState);
+        setExampleChart(exampleState);
         await generateCharts();
     }
 
@@ -219,55 +224,67 @@ const Charts = (dID) => {
             gData.push(graphDataInstance);
         })
         setChartData(gData);
-        
+        console.log(gData)
       }
 
     return (
         <div>
             {displayChart == true && (
             <div style={{paddingLeft: '15px', paddingRight: '15px'}}>
-                <h3 className="text-1xl font=semibold tracking-wide mt-6"> Chart Title</h3>
-                <input
-                    onChange={onChange}
-                    name="title"
-                    placeholder="Title"
-                    value={chart.title}
-                    className="border-b pb-2 text-lg my-4 focus:outline-none w-full font-light
-                    text-gray-500 placeholder-gray-500 y-z">
-                </input>
-                <div className="text-1xl font=semibold tracking-wide mt-6"> Choose a Signal to Monitor</div>
-                <select name='signal' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
-                onChange={onChange}>{
-                    signals.map( (x,y) => 
-                    <option key={y}>{x}</option> )
-                }</select>
-                            <div className="text-1xl font=semibold tracking-wide mt-6"> Choose the time period (from today)</div>
-                <select name='period' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
-                onChange={onChange}>{
-                    periodList.map( (x,y) => 
-                    <option key={y}>{x}</option> )
-                }</select>
-                <h1>
-                {"\n"}
-                </h1>
-                <div className="text-1xl font=semibold tracking-wide mt-6"> Choose a Graph Type</div>
-                <select name='type' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
-                onChange={onChange}>{
-                    typeList.map( (x,y) => 
-                    <option key={y}>{x}</option> )
-                }</select>
-                <h1>
-                {"\n"}
-                </h1>
-                <div className="text-1xl font=semibold tracking-wide mt-6"> Sort Data by: </div>
-                <select name='filter' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
-                onChange={onChange}>{
-                    filterList.map( (x,y) => 
-                    <option key={y}>{x}</option> )
-                }</select>
-                <h1>
-                {"\n"}
-                </h1>
+                <Row>
+                    <Col xs={12} md={4}>
+                        <h3 className="text-1xl font=semibold tracking-wide mt-6"> Chart Title</h3>
+                        <input
+                            onChange={onChange}
+                            name="title"
+                            placeholder="Title"
+                            value={chart.title}
+                            className="border-b pb-2 text-lg my-4 focus:outline-none w-full font-light
+                            text-gray-500 placeholder-gray-500 y-z">
+                        </input>
+                        <div className="text-1xl font=semibold tracking-wide mt-6"> Choose a Signal to Monitor</div>
+                        <select name='signal' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
+                        onChange={onChange}>{
+                            signals.map( (x,y) => 
+                            <option key={y}>{x}</option> )
+                        }</select>
+                                    <div className="text-1xl font=semibold tracking-wide mt-6"> Choose the time period (from today)</div>
+                        <select name='period' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
+                        onChange={onChange}>{
+                            periodList.map( (x,y) => 
+                            <option key={y}>{x}</option> )
+                        }</select>
+                        <h1>
+                        {"\n"}
+                        </h1>
+                        <div className="text-1xl font=semibold tracking-wide mt-6"> Choose a Graph Type</div>
+                        <select name='type' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
+                        onChange={onChange}>{
+                            typeList.map( (x,y) => 
+                            <option key={y}>{x}</option> )
+                        }</select>
+                        <h1>
+                        {"\n"}
+                        </h1>
+                        <div className="text-1xl font=semibold tracking-wide mt-6"> Sort Data by: </div>
+                        <select name='filter' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
+                        onChange={onChange}>{
+                            filterList.map( (x,y) => 
+                            <option key={y}>{x}</option> )
+                        }</select>
+                        <h1>
+                        {"\n"}
+                        </h1>
+                    </Col>
+                    <Col xs={12} md={1}></Col>
+                    <Col xs={12} md={7} lg={7}>
+                        <Card style={{height: "18vw"}}>
+                            <Card.Body>
+                                    <BarChart chartData={exampleChart} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
                 <Row>
                     <Col xs={2}>
                         <button style={{ color: 'blue'}}

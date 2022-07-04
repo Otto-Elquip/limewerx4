@@ -6,7 +6,7 @@ import { updateCard, createCard } from '../../../graphql/mutations'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const initialState = { title: '', type: '', period: '', CSSId: '', isDisplayed: false};
+const initialState = { title: '', type: '', period: '', CSSId: '', signal: '', isDisplayed: false};
 const SIGNAL_LIMIT = 5000;
 const Cards = (dID) => {
     const [cardData, setCardData] = useState([]);
@@ -34,6 +34,7 @@ const Cards = (dID) => {
         });
         notify("Card Added");
         setDisplayCard(false);
+        setCard(initialState);
         await generateCards();
     }
     
@@ -168,37 +169,52 @@ const Cards = (dID) => {
         <div>
             {displayCard == true && (
             <div style={{paddingLeft: '15px', paddingRight: '15px'}}>
-                
-                <h3 className="text-1xl font=semibold tracking-wide mt-6"> Card Title</h3>
-                <input
-                    onChange={onChange}
-                    name="title"
-                    placeholder="Title"
-                    value={card.title}
-                    className="border-b pb-2 text-lg my-4 focus:outline-none w-full font-light
-                    text-gray-500 placeholder-gray-500 y-z">
-                </input>
-                <div className="text-1xl font=semibold tracking-wide mt-6"> Choose a Signal to Monitor</div>
-                <select name='signal' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
-                onChange={onChange}>{
-                    signals.map( (x,y) => 
-                    <option key={y}>{x}</option> )
-                }</select>
-                <div className="text-1xl font=semibold tracking-wide mt-6"> Choose the Filter Type</div>
-                <select name='type' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
-                onChange={onChange}>{
-                    typeList.map( (x,y) => 
-                    <option key={y}>{x}</option> )
-                }</select>
-                <div className="text-1xl font=semibold tracking-wide mt-6"> Choose the time period (from today)</div>
-                <select name='period' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
-                onChange={onChange}>{
-                    periodList.map( (x,y) => 
-                    <option key={y}>{x}</option> )
-                }</select>
-                <h1>
-                    {"\n"}
-                </h1>
+                <Row>
+                    <Col xs={12} md={4} >
+                        <h3 className="text-1xl font=semibold tracking-wide mt-6"> Card Title</h3>
+                        <input
+                            onChange={onChange}
+                            name="title"
+                            placeholder="Title"
+                            value={card.title}
+                            className="border-b pb-2 text-lg my-4 focus:outline-none w-full font-light
+                            text-gray-500 placeholder-gray-500 y-z">
+                        </input>
+                        <div className="text-1xl font=semibold tracking-wide mt-6"> Choose a Signal to Monitor</div>
+                        <select name='signal' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
+                        onChange={onChange}>{
+                            signals.map( (x,y) => 
+                            <option key={y}>{x}</option> )
+                        }</select>
+                        <div className="text-1xl font=semibold tracking-wide mt-6"> Choose the Filter Type</div>
+                        <select name='type' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
+                        onChange={onChange}>{
+                            typeList.map( (x,y) => 
+                            <option key={y}>{x}</option> )
+                        }</select>
+                        <div className="text-1xl font=semibold tracking-wide mt-6"> Choose the time period (from today)</div>
+                        <select name='period' style={{border: '1px solid black', borderRadius: '7px', width: '350px', height: '40px', justifyContent: 'center'}}
+                        onChange={onChange}>{
+                            periodList.map( (x,y) => 
+                            <option key={y}>{x}</option> )
+                        }</select>
+                        <h1>
+                            {"\n"}
+                        </h1>
+                    </Col>
+                    <Col xs={12} md={1}></Col>
+                    <Col xs={12} md={6}>
+                        <Card>
+                            <Card.Body>
+                                <Card.Header style={{textAlign: "center"}}>{card.title}</Card.Header>
+                                <Card.Title style={{textAlign: "center"}}>{card.signal}</Card.Title>
+                                <Card.Text style={{textAlign: "center"}}>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    
+                    </Col>
+                </Row>
                 <Row>
                     <Col xs={1}>
                         <button style={{ color: 'blue'}}

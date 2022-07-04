@@ -10,6 +10,8 @@ export default function Home({deviceList}){
     fetchCanData()
   }, [deviceID]);
 
+  console.log(deviceList)
+
   async function fetchCanData() {
     let filterStr = {deviceID: {eq: '1234ABCD'}};
     const data = await API.graphql({

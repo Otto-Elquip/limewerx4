@@ -1,5 +1,5 @@
 import { useState , useEffect} from "react";
-import { withAuthenticator } from "@aws-amplify/ui-react";
+import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import Navbar2 from "../components/Navbar";
 import { Auth } from 'aws-amplify';
 import { API } from 'aws-amplify';
@@ -26,9 +26,9 @@ const initialState =
 
     useEffect(() => {
       checkAuth();
-      getAccount(Auth.currentAuthenticatedUser());
+      getAccount();
     }, [])
-    
+
     const checkAuth = () =>
     {
       Promise.all([Auth.currentUserCredentials()])
@@ -37,6 +37,7 @@ const initialState =
         if(a.authenticated == true)
         {
           setAuthenticated(true);
+
         }
         if(a.authenticated == undefined)
         {
@@ -45,12 +46,15 @@ const initialState =
       })
     }
 
-    async function getAccount(u)
+    async function getAccount()
     {
-       let filterStr = {CognitoUserName: {eq: u.username}};
+      var user = await Auth.currentAuthenticatedUser();
+      let filterStr = {CognitoUserName: {eq: user.username}};
+       console.log(filterStr)
        const acc = await API.graphql({
          query: listAccounts, variables: {filter: filterStr}
        });
+       console.log(acc)
        if(acc.data.listAccounts.items.length > 0)
        {
          setAccountExists(true);
@@ -142,7 +146,7 @@ const initialState =
                    <h3 className="text-1xl  tracking-wide mt-6 mb-2">Account Name: {account.AccountName}</h3>
                    <h3 className="text-1xl  tracking-wide mt-6 mb-2">Business Name: {account.BusinessName}</h3>
                    <h3 className="text-1xl  tracking-wide mt-6 mb-2">Email: {account.EmailAddr}</h3> 
-                   <button onClick={signOut} style={{color: 'blue'}}> sign out</button>          
+                   <AmplifySignOut/>      
                 </>
               )}
             </div>

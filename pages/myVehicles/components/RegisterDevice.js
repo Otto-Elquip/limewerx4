@@ -25,11 +25,12 @@ function RegisterDevice(AccountId)
     const [id, setId] = useState(AccountId.accountID);
 
     useEffect(() => {
-        setInitParams(AccountId.AccountId);
+        setInitParams(AccountId.AccountId.username);
     }, [])
 
     async function setInitParams(accId)
     {
+        console.log(accId)
         let filterStr = {CognitoUserName: {eq: accId}}
         const accountList = await API.graphql({
             query: listAccounts, 

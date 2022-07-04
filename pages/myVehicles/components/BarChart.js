@@ -3,7 +3,7 @@ import Chart from "chart.js/auto";
 
 
 const BarChart = (chartData) =>  {
-
+  console.log(chartData)
   const canvasEl = useRef(null);
   const colors = {
     purple: {

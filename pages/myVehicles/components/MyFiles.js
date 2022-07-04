@@ -14,6 +14,7 @@ const MyFiles = (deviceID) => {
     const [displayFiles, setDisplayFiles] = useState([]);
     const [userName, setUserName] = useState('');
 
+    console.log(deviceID)
     useEffect(() => {
         fetchFiles(deviceID.deviceID);
     },[deviceID])
@@ -48,7 +49,6 @@ const MyFiles = (deviceID) => {
                 variables: {filter: filterStr2}
             });
             var files = uploadedFiles.data.listUploadFiles.items;
-            console.log(files)
             filesList.push(files.filter(x => x.isDeleted == false))
         }
         setDisplayFiles(filesList.flat()) 

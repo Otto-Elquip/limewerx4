@@ -1,6 +1,6 @@
 import { useState, useEffect, React} from "react";
 import { API } from 'aws-amplify';
-import { listCanData} from '../../../graphql/queries'
+import { listCanData} from '../../graphql/queries'
 import { CSVLink } from 'react-csv'
 
 const csvHeaders = [

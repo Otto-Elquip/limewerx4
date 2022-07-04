@@ -1,4 +1,4 @@
-import '@aws-amplify/ui-react/styles.css';
+//import '@aws-amplify/ui-react/styles.css';
 import 'tailwindcss/tailwind.css';
 import '../configureAmplify';
 import awsconfig from '../aws-exports';

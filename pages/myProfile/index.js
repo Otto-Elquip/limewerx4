@@ -25,16 +25,15 @@ const initialState =
     const [account, setAccount] = useState();
 
     useEffect(() => {
-      checkAuth(user);
-      getAccount(user);
+      checkAuth();
+      getAccount(Auth.currentAuthenticatedUser());
     }, [])
-
-    const checkAuth = (u) =>
+    
+    const checkAuth = () =>
     {
       Promise.all([Auth.currentUserCredentials()])
       .then( result => {
         const [a] = result;
-        console.log(a)
         if(a.authenticated == true)
         {
           setAuthenticated(true);

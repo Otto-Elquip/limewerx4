@@ -3,7 +3,7 @@ import { listCanData } from '../../../graphql/queries'
 import { API } from 'aws-amplify'
 
 export default function Home({deviceList}){
-  const [dList, setDList] = useState(deviceList)
+  const [dList, setDList] = useState([])
   const [deviceID, setDeviceID] = useState()
   const [canData, setCanData] = useState([])
   useEffect(() => {
@@ -25,9 +25,7 @@ export default function Home({deviceList}){
       <select style={{paddingTop: '10px', paddingLeft: '15px'}} onChange={handleDeviceChange}>
         <option value="Select a vehicle">---Select a Vehicle---</option>
         {dList.map((device) => <option key={device.id} value={device.CSSId}>{device.Vehicle}</option>)}
-      </select>
-      
-      
+      </select>   
   )
 
 }

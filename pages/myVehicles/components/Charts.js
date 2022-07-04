@@ -67,7 +67,7 @@ const Charts = (dID) => {
         await API.graphql({
             query: updateChart, 
             variables: {input: chartDetails}});
-        await fetchCanData();
+        await generateCharts();
     }
 
     function onChange(e) {
@@ -306,7 +306,7 @@ const Charts = (dID) => {
                 <Row>
                     {chartData.map((c, k) => (
                         <Col key={k} xs={100} md={100} lg={100}>
-                            <Card style={{height: "32vw"}}>
+                            <Card style={{height: "38vw"}}>
                             <Card.Header> <button name={`${c.id}!${c.version}`} 
                         onClick={deleteChartByID}>🗑️</button></Card.Header>
                             <Card.Body>

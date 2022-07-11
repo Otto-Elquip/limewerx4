@@ -55,8 +55,7 @@ function Home({deviceList}){
       
       Promise.all([Auth.currentUserCredentials()])
       .then( result => {
-        const [a] = result;
-        console.log()
+        const [a] = result
         if(a.authenticated == true)
         {
           setAuthenticated(true);
@@ -70,7 +69,6 @@ function Home({deviceList}){
 
     async function setDeviceList(dl){
         var user = await Auth.currentAuthenticatedUser();
-        console.log(user)
         setAccountID(user);
         let filterStr = {CognitoUserName: {eq: user.username}}
         const accountList = await API.graphql({
@@ -78,9 +76,7 @@ function Home({deviceList}){
             variables: {filter: filterStr}
         })
         var userId = accountList.data.listAccounts.items[0].id
-        console.log(userId)
         setDList(dl.filter(x => x.accountID ==userId));
-        console.log(dl.filter(x => x.accountID ==userId))
     }
     useEffect(() => {
         fetchCanData();
@@ -180,6 +176,11 @@ function Home({deviceList}){
         }
     }
 
+    function Cancel()
+    {
+        setNewDevice(false);
+    }
+
   return (
     <div>
         <Navbar2 authenticated={authenticated} />
@@ -196,7 +197,12 @@ function Home({deviceList}){
             {newDevice == true && (
                 <>
                     <RegisterDevice AccountId={accountID} disp={newDevice}/>
-                
+                    <div style={{paddingLeft: '10px'}}>
+                        <button
+                            style={{color: 'blue'}}  
+                            onClick={Cancel}> Cancel  
+                        </button>
+                    </div>
                 </>
             )}
            <h1>
@@ -207,10 +213,10 @@ function Home({deviceList}){
                {"\n"}
            </h1>
             
-            <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: `${tabColours[0]}`}}  onClick={() => setTab(1)}> Raw Data </button>
-            <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[1]}} onClick={() => setTab(2)}> Dashboard </button>
-            <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[2]}} onClick={() => setTab(3)}> Alerts </button>
-            <button style={{ border: '1px solid black', borderRadius: '7px', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[3]}} onClick={() => setTab(4)}> My Files </button>
+            <button style={{ border: '1px solid black', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: `${tabColours[0]}`}}  onClick={() => setTab(1)}> Raw Data </button>
+            <button style={{ border: '1px solid black', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[1]}} onClick={() => setTab(2)}> Dashboard </button>
+            <button style={{ border: '1px solid black', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[2]}} onClick={() => setTab(3)}> Alerts </button>
+            <button style={{ border: '1px solid black', width: '100px', height: '40px', justifyContent: 'center', backgroundColor: tabColours[3]}} onClick={() => setTab(4)}> My Files </button>
             
             <hr style={{color: 'black', height: 5}} />
 

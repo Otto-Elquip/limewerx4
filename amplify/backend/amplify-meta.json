@@ -50,12 +50,12 @@
           ]
         }
       ],
-      "lastPushTimeStamp": "2022-06-08T00:52:04.700Z",
+      "lastPushTimeStamp": "2022-07-06T00:23:18.595Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apilimewerx"
       },
-      "lastPushDirHash": "yYxz8jolZUZIXi7HykoLT08sItw="
+      "lastPushDirHash": "7Mv/2rkR3c5bQAqFNjW1szHT3ck="
     }
   },
   "auth": {
@@ -95,7 +95,7 @@
         "IdentityPoolName": "testAuthIdentityPool__dev",
         "UserPoolName": "limewerx"
       },
-      "lastPushTimeStamp": "2022-06-08T00:52:04.714Z",
+      "lastPushTimeStamp": "2022-07-06T00:23:18.769Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/auth/limewerx-cloudformation-template.json",
         "logicalId": "authlimewerx"
@@ -111,7 +111,7 @@
         "BucketName": "limewerx-storage-4eff9800160310-dev",
         "Region": "ap-southeast-2"
       },
-      "lastPushTimeStamp": "2022-06-08T00:52:14.457Z",
+      "lastPushTimeStamp": "2022-07-06T00:23:28.283Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-limewerx-dev-160310-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3limewerxstorage4eff9800"

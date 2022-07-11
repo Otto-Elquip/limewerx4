@@ -6,7 +6,7 @@ import { updateCard, createCard } from '../../../graphql/mutations'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const initialState = { title: '', type: '', period: '', CSSId: '', signal: '', isDisplayed: false};
+const initialState = { title: '', type: '', period: '', CSSId: '', signal: '', isDisplayed: false, unit: ''};
 const SIGNAL_LIMIT = 5000;
 const Cards = (dID) => {
     const [cardData, setCardData] = useState([]);
@@ -28,7 +28,7 @@ const Cards = (dID) => {
 
     async function createNewCard() {
         if(!card.title || !card.type || !card.period) return
-        await API.graphql({
+        var result = await API.graphql({
             query: createCard,
             variables: { input: card}
         });
@@ -92,6 +92,8 @@ const Cards = (dID) => {
         var allowableCardDiff = 0;
         var cData = [];
         var displayedCards = cards.data.listCards.items.filter(x => x.isDisplayed == true)
+        var unit;
+        var period;
         displayedCards.forEach(function(card){
             switch(card.period)
             {
@@ -111,6 +113,8 @@ const Cards = (dID) => {
 
             var filteredData = data.data.listCanData.items.filter( x => x.Signal == card.signal)
             var values = [];
+            unit = card.unit;
+            period = card.period;
             filteredData.forEach(function(e){
                 var canDate = e.createdAt.split("-");
                 var dateString = `${canDate[0]}/${canDate[2].split("T")[0]}/${canDate[1]}`;
@@ -135,7 +139,7 @@ const Cards = (dID) => {
                     {
                         var cardVal = 'No data available for this time period';
                     }
-                    cData.push({Signal: card.title, Value: cardVal, Units: '', id: card.id, version: card._version});
+                    cData.push({Signal: card.title, Value: cardVal, Units: unit, id: card.id, version: card._version});
                     break;
                 case 'Min':
                     if(values.length>0)
@@ -146,7 +150,7 @@ const Cards = (dID) => {
                     {
                         var cardVal = 'No data available for this time period';
                     }
-                    cData.push({Signal: card.title, Value: cardVal, Units: '', id: card.id, version: card._version});
+                    cData.push({Signal: card.title, Value: cardVal, Units: unit, id: card.id, version: card._version});
                     break;
                 case 'Average':
                     if(values.length>0)
@@ -158,13 +162,14 @@ const Cards = (dID) => {
                     {
                         var avg = 'No data available for this time period';
                     }
-                    cData.push({Signal: card.title, Value: avg, Units: '', id: card.id, version: card._version});
+                    cData.push({Signal: card.title, Value: avg, unit: unit, id: card.id, version: card._version, period: period});
                     break;
         }          
     })
     setCardData(cData);
 
   }
+  console.log(cardData)
     return (
         <div>
             {displayCard == true && (
@@ -198,6 +203,17 @@ const Cards = (dID) => {
                             periodList.map( (x,y) => 
                             <option key={y}>{x}</option> )
                         }</select>
+                        <h6 className="text-1xl font=semibold tracking-wide mt-6">
+                            Units
+                        </h6>
+                        <input
+                            onChange={onChange}
+                            name="unit"
+                            placeholder="units (optional)"
+                            value={card.unit}
+                            className="border-b pb-2 text-lg my-4 focus:outline-none w-full font-light
+                            text-gray-500 placeholder-gray-500 y-z">
+                        </input>
                         <h1>
                             {"\n"}
                         </h1>
@@ -206,10 +222,13 @@ const Cards = (dID) => {
                     <Col xs={12} md={6}>
                         <Card>
                             <Card.Body>
-                                <Card.Header style={{textAlign: "center"}}>{card.title}</Card.Header>
-                                <Card.Title style={{textAlign: "center"}}>{card.signal}</Card.Title>
+                                <Card.Header style={{textAlign: "center"}}>{card.title} - {card.period}</Card.Header>
+                                <Card.Title style={{textAlign: "center"}}>{card.signal} Reading </Card.Title>
                                 <Card.Text style={{textAlign: "center"}}>
                                 </Card.Text>
+                                <Card.Footer style={{textAlign: "center"}}>
+                                    {card.unit}
+                                </Card.Footer>
                             </Card.Body>
                         </Card>
                     
@@ -239,15 +258,17 @@ const Cards = (dID) => {
                     {cardData.map((cardData, k) => (
                         <Col key={k} xs={12} md={3} lg={4}>
                             <Card>
-                            <Card.Header>{cardData.Signal} 
+                            <Card.Header>{cardData.Signal}  - {cardData.period}
                             <button name={`${cardData.id}!${cardData.version}`} 
                             onClick={deleteCardByID}>🗑️</button></Card.Header>
                             <Card.Body>
                                 <Card.Title style={{textAlign: "center"}}>{cardData.Value}</Card.Title>
                                 <Card.Text style={{textAlign: "center"}}>
-                                    {cardData.Units}
                                 </Card.Text>
                             </Card.Body>
+                            <Card.Footer style={{textAlign: "center"}}>
+                                    {cardData.unit}
+                            </Card.Footer>
                             </Card>
                             <h1>{"\n"}</h1>
                         </Col>

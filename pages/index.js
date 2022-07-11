@@ -23,7 +23,6 @@ export default function Main() {
     Promise.all([Auth.currentUserCredentials()])
     .then( result => {
       const [a] = result;
-      console.log(a.authenticated)
       if(a.authenticated == true)
       {
         setAuthenticated(true);

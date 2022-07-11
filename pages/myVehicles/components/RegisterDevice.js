@@ -30,7 +30,6 @@ function RegisterDevice(AccountId)
 
     async function setInitParams(accId)
     {
-        console.log(accId)
         let filterStr = {CognitoUserName: {eq: accId}}
         const accountList = await API.graphql({
             query: listAccounts, 
@@ -40,11 +39,7 @@ function RegisterDevice(AccountId)
         var dateNow = new Date();
         var dateStr = dateNow.toString();
         setNewDevice(() => ({...newDevice, DateActivated: dateStr, accountID: userId}));
-    }
 
-    function Cancel()
-    {
-        setDisplay(false);
     }
 
     async function createNewDevice()
@@ -126,9 +121,6 @@ function RegisterDevice(AccountId)
                     <button 
                         style={{color: 'blue', paddingLeft: '10px', paddingRight: '10px'}}  
                         onClick={createNewDevice}> Register Device |  </button>
-                    <button 
-                        style={{color: 'blue'}}  
-                        onClick={Cancel}> Cancel  </button>
                     
                     </Col>
 

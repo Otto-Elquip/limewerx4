@@ -78,6 +78,7 @@ type Card @aws_iam @aws_cognito_user_pools @aws_api_key {
   period: String!
   isDisplayed: Boolean!
   signal: String
+  unit: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -591,6 +592,7 @@ input ModelCardFilterInput {
   period: ModelStringInput
   isDisplayed: ModelBooleanInput
   signal: ModelStringInput
+  unit: ModelStringInput
   and: [ModelCardFilterInput]
   or: [ModelCardFilterInput]
   not: ModelCardFilterInput
@@ -603,6 +605,7 @@ input ModelCardConditionInput {
   period: ModelStringInput
   isDisplayed: ModelBooleanInput
   signal: ModelStringInput
+  unit: ModelStringInput
   and: [ModelCardConditionInput]
   or: [ModelCardConditionInput]
   not: ModelCardConditionInput
@@ -616,6 +619,7 @@ input CreateCardInput {
   period: String!
   isDisplayed: Boolean!
   signal: String
+  unit: String
   _version: Int
 }
 
@@ -627,6 +631,7 @@ input UpdateCardInput {
   period: String
   isDisplayed: Boolean
   signal: String
+  unit: String
   _version: Int
 }
 

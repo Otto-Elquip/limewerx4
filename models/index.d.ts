@@ -130,6 +130,7 @@ export declare class Card {
   readonly period: string;
   readonly isDisplayed: boolean;
   readonly signal?: string | null;
+  readonly unit?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Card, CardMetaData>);

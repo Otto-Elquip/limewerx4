@@ -50,7 +50,6 @@ const initialState =
     {
       var user = await Auth.currentAuthenticatedUser();
       let filterStr = {CognitoUserName: {eq: user.username}};
-       console.log(filterStr)
        const acc = await API.graphql({
          query: listAccounts, variables: {filter: filterStr}
        });
@@ -65,7 +64,7 @@ const initialState =
        {
          setAccountExists(false);
          setAccount({});
-         setNewAccount(() => ({...newAccount, EmailAddr: u.attributes.email, CognitoUserName: u.username}));
+         setNewAccount(() => ({...newAccount, EmailAddr: user.attributes.email, CognitoUserName: user.username}));
        }
     }
 
@@ -116,7 +115,6 @@ const initialState =
                   <>
                                     
                     <h3 className="text-3xl font-semibold tracking-wide mt-6 mb-2">Create Account</h3>
-                    <button onClick={signOut}> sign out</button>
                     <h3 className="text-1xl font=semibold tracking-wide mt-6"> Account Name *</h3>
                     <input
                         onChange={onChange}
@@ -137,6 +135,8 @@ const initialState =
                     </input>
                     <button style={{color: 'blue' }}
                     onClick={createNewAccount}> Create Account </button>
+
+                    <AmplifySignOut/>
                    
                   </>
               )}

@@ -1,4 +1,4 @@
-import { useState , useEffect} from "react";
+import { useState , useEffect, React} from "react";
 import { API } from 'aws-amplify';
 import { createDevice } from '../../../graphql/mutations';
 import { listAccounts } from '../../../graphql/queries';
@@ -59,10 +59,12 @@ function RegisterDevice(AccountId)
         if(PostResult.data != undefined)
         {
             notify('Device Successfully Registered');
+            window.location.reload();
         }
         else
         {
             notify('Error Registering Device, Please Try Again');
+            
         }
         setDisplay(false);
         

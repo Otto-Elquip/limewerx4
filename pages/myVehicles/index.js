@@ -75,6 +75,7 @@ function Home({deviceList}){
             query: listAccounts, 
             variables: {filter: filterStr}
         })
+        console.log(accountList)
         var userId = accountList.data.listAccounts.items[0].id
         setDList(dl.filter(x => x.accountID ==userId));
     }

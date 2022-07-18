@@ -13,6 +13,7 @@ import MyFiles from './components/MyFiles';
 import { Row, Col, Container }from 'react-bootstrap';
 import { CSVLink } from 'react-csv'
 import { Auth } from 'aws-amplify';
+import { DllPlugin } from "webpack";
 
 
 const csvHeaders = [
@@ -70,6 +71,7 @@ function Home({deviceList}){
     async function setDeviceList(dl){
         var user = await Auth.currentAuthenticatedUser();
         setAccountID(user);
+        console.log(dl)
         let filterStr = {CognitoUserName: {eq: user.username}}
         const accountList = await API.graphql({
             query: listAccounts, 
@@ -295,7 +297,8 @@ export const getStaticProps = async () => {
     });
   
     const temp = devices.data.listDevices.items;
-    var deviceList = temp    
+    var deviceList = temp
+    console.log(deviceList);
 
     return {
         props: {

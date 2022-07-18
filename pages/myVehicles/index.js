@@ -13,7 +13,6 @@ import MyFiles from './components/MyFiles';
 import { Row, Col, Container }from 'react-bootstrap';
 import { CSVLink } from 'react-csv'
 import { Auth } from 'aws-amplify';
-import { DllPlugin } from "webpack";
 
 
 const csvHeaders = [

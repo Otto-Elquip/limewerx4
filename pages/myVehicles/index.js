@@ -30,11 +30,11 @@ var initialCSVState = {
 };
 
 
-function Home({deviceList}){
+function Home(){
 
     const [tab, setTab] = useState(1);
     const [tabColours, setTabColours] = useState(['none', 'grey', 'grey', 'grey'])
-    const [dList, setDList] = useState(deviceList);
+    const [dList, setDList] = useState([]);
     const [csvData, setCSVData] = useState(initialCSVState);
     const [deviceID, setDeviceID] = useState("");
     const [canData, setCanData] = useState([]);
@@ -45,11 +45,21 @@ function Home({deviceList}){
     const [authenticated, setAuthenticated] = useState();
 
     useEffect(() => {
-        
-        setDeviceList(deviceList);
         checkAuth();
+        fetchDevices();
     }, [])
 
+    async function fetchDevices()
+    {
+        const devices = await API.graphql({
+            query: listDevices
+        });
+
+        console.log(devices)
+        var deviceList = devices.data.listDevices.items;
+        setDList(deviceList);
+        setDeviceList(deviceList);
+    }
     const checkAuth = () =>
     {
       
@@ -289,21 +299,21 @@ function Home({deviceList}){
   )
 }
 
-export const getStaticProps = async () => {
+//export const getStaticProps = async () => {
 
-    const devices = await API.graphql({
-        query: listDevices
-    });
+    //const devices = await API.graphql({
+    //    query: listDevices
+   // });
   
-    const temp = devices.data.listDevices.items;
-    var deviceList = temp
-    console.log(deviceList);
+    //const temp = devices.data.listDevices.items;
+    //var deviceList = temp
+    //console.log(deviceList);
 
-    return {
-        props: {
-            deviceList
-        }
-    }
-}
+    //return {
+     //   props: {
+    //        deviceList
+    //    }
+  //  }
+//}
 
 export default withAuthenticator(Home)
